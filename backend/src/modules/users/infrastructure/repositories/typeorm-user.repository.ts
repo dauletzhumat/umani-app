@@ -31,4 +31,16 @@ export class TypeOrmUserRepository implements UserRepository {
 
     return qb.getOne();
   }
+
+  async create(identifier: {
+    phone: string | null;
+    email: string | null;
+  }): Promise<User> {
+    return this.repository.save({
+      phone: identifier.phone,
+      email: identifier.email,
+      locale: 'ru',
+      defaultCurrency: 'KZT',
+    });
+  }
 }

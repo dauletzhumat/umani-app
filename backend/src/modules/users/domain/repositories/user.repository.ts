@@ -5,4 +5,9 @@ export abstract class UserRepository {
     phone: string | null;
     email: string | null;
   }): Promise<User | null>;
+
+  abstract create(identifier: {
+    phone: string | null;
+    email: string | null;
+  }): Promise<User>;
 }

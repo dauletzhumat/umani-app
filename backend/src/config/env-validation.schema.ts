@@ -11,4 +11,7 @@ export const envValidationSchema = Joi.object({
   POSTGRES_USER: Joi.string().default('ai_finance'),
   POSTGRES_PASSWORD: Joi.string().default('ai_finance'),
   POSTGRES_DB: Joi.string().default('ai_finance'),
+
+  // Dev-only default — staging/production must override this (DevOps task, not MVP scope).
+  JWT_SECRET: Joi.string().default('dev-only-insecure-secret-change-me'),
 });

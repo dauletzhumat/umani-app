@@ -21,4 +21,19 @@ export class TypeOrmOtpCodeRepository implements OtpCodeRepository {
       expiresAt: data.expiresAt,
     });
   }
+
+  findLatestByIdentifier(identifier: string): Promise<OtpCode | null> {
+    return this.repository.findOne({
+      where: { identifier },
+      order: { expiresAt: 'DESC' },
+    });
+  }
+
+  async incrementAttempts(id: string): Promise<void> {
+    await this.repository.increment({ id }, 'attempts', 1);
+  }
+
+  async markUsed(id: string): Promise<void> {
+    await this.repository.update({ id }, { usedAt: new Date() });
+  }
 }
