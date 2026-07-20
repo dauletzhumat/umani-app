@@ -47,4 +47,17 @@ export class TypeOrmUserRepository implements UserRepository {
   findById(id: string): Promise<User | null> {
     return this.repository.findOne({ where: { id } });
   }
+
+  async createWithId(
+    id: string,
+    identifier: { phone: string | null; email: string | null },
+  ): Promise<User> {
+    return this.repository.save({
+      id,
+      phone: identifier.phone,
+      email: identifier.email,
+      locale: 'ru',
+      defaultCurrency: 'KZT',
+    });
+  }
 }

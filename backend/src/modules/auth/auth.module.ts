@@ -17,12 +17,15 @@ import {
 } from './infrastructure/services/jwt.service';
 import { JwtAuthGuard } from './infrastructure/guards/jwt-auth.guard';
 import { OtpIssuerService } from './application/services/otp-issuer.service';
+import { OtpVerifierService } from './application/services/otp-verifier.service';
 import { TokenIssuerService } from './application/services/token-issuer.service';
 import { RegisterUseCase } from './application/use-cases/register.use-case';
 import { LoginUseCase } from './application/use-cases/login.use-case';
 import { VerifyOtpUseCase } from './application/use-cases/verify-otp.use-case';
 import { RefreshTokenUseCase } from './application/use-cases/refresh-token.use-case';
 import { LogoutUseCase } from './application/use-cases/logout.use-case';
+import { GuestSessionUseCase } from './application/use-cases/guest-session.use-case';
+import { UpgradeGuestUseCase } from './application/use-cases/upgrade-guest.use-case';
 import { AuthController } from './infrastructure/controllers/auth.controller';
 
 @Module({
@@ -48,6 +51,7 @@ import { AuthController } from './infrastructure/controllers/auth.controller';
     { provide: APP_GUARD, useClass: JwtAuthGuard },
     OtpSenderService,
     OtpIssuerService,
+    OtpVerifierService,
     TokenIssuerService,
     JwtService,
     RegisterUseCase,
@@ -55,6 +59,8 @@ import { AuthController } from './infrastructure/controllers/auth.controller';
     VerifyOtpUseCase,
     RefreshTokenUseCase,
     LogoutUseCase,
+    GuestSessionUseCase,
+    UpgradeGuestUseCase,
   ],
 })
 export class AuthModule {}

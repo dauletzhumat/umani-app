@@ -12,4 +12,11 @@ export abstract class UserRepository {
   }): Promise<User>;
 
   abstract findById(id: string): Promise<User | null>;
+
+  /** Inserts with an explicit id — used to upgrade a guest session into a
+   * real account under the same sub the guest token already carries. */
+  abstract createWithId(
+    id: string,
+    identifier: { phone: string | null; email: string | null },
+  ): Promise<User>;
 }

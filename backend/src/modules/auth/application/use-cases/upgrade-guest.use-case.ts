@@ -5,31 +5,20 @@ import { parseIdentifier } from '../../../../shared/utils/identifier';
 import { VerifyOtpDto } from '../../infrastructure/dto/verify-otp.dto';
 import { OtpVerifierService } from '../services/otp-verifier.service';
 import { TokenIssuerService } from '../services/token-issuer.service';
-
-export interface VerifyOtpResult {
-  accessToken: string;
-  refreshToken: string;
-  expiresIn: number;
-  user: {
-    id: string;
-    phone: string | null;
-    email: string | null;
-    name: string | null;
-    locale: string;
-    defaultCurrency: string;
-    isNewUser: boolean;
-  };
-}
+import { VerifyOtpResult } from './verify-otp.use-case';
 
 @Injectable()
-export class VerifyOtpUseCase {
+export class UpgradeGuestUseCase {
   constructor(
-    private readonly otpVerifierService: OtpVerifierService,
     private readonly userRepository: UserRepository,
+    private readonly otpVerifierService: OtpVerifierService,
     private readonly tokenIssuerService: TokenIssuerService,
   ) {}
 
-  async execute(dto: VerifyOtpDto): Promise<VerifyOtpResult> {
+  async execute(
+    guestUserId: string,
+    dto: VerifyOtpDto,
+  ): Promise<VerifyOtpResult> {
     const parsed = parseIdentifier(dto.identifier);
     if (!parsed) {
       throw new AppException(
@@ -40,14 +29,28 @@ export class VerifyOtpUseCase {
       );
     }
 
+    const alreadyUpgraded = await this.userRepository.findById(guestUserId);
+    if (alreadyUpgraded) {
+      throw new AppException(
+        HttpStatus.CONFLICT,
+        'CONFLICT',
+        'This session has already been upgraded',
+      );
+    }
+
+    const existingUser =
+      await this.userRepository.findActiveByIdentifier(parsed);
+    if (existingUser) {
+      throw new AppException(
+        HttpStatus.CONFLICT,
+        'USER_ALREADY_EXISTS',
+        'A user with this identifier is already registered',
+      );
+    }
+
     await this.otpVerifierService.verify(dto.identifier, dto.code);
 
-    let user = await this.userRepository.findActiveByIdentifier(parsed);
-    let isNewUser = false;
-    if (!user) {
-      user = await this.userRepository.create(parsed);
-      isNewUser = true;
-    }
+    const user = await this.userRepository.createWithId(guestUserId, parsed);
 
     const { accessToken, refreshToken, expiresIn } =
       await this.tokenIssuerService.issue(user.id);
@@ -63,7 +66,7 @@ export class VerifyOtpUseCase {
         name: user.name,
         locale: user.locale,
         defaultCurrency: user.defaultCurrency,
-        isNewUser,
+        isNewUser: true,
       },
     };
   }
