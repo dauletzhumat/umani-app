@@ -1,4 +1,5 @@
 import { AppDataSource } from '../../src/database/data-source';
+import { revertAllMigrations } from './migration-test-utils';
 
 async function extensionExists(name: string): Promise<boolean> {
   const rows: unknown[] = await AppDataSource.query(
@@ -41,7 +42,7 @@ describe('Migration 0001_init_extensions_and_enums (e2e)', () => {
     await expect(enumTypeExists('account_type')).resolves.toBe(true);
     await expect(enumTypeExists('recurring_periodicity')).resolves.toBe(true);
 
-    await expect(AppDataSource.undoLastMigration()).resolves.not.toThrow();
+    await expect(revertAllMigrations(AppDataSource)).resolves.not.toThrow();
 
     await expect(enumTypeExists('account_type')).resolves.toBe(false);
     await expect(enumTypeExists('recurring_periodicity')).resolves.toBe(false);
