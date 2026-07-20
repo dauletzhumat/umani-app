@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { IsNull, Repository } from 'typeorm';
 import { RefreshToken } from '../../domain/entities/refresh-token.entity';
 import {
   CreateRefreshTokenData,
@@ -21,5 +21,20 @@ export class TypeOrmRefreshTokenRepository implements RefreshTokenRepository {
       expiresAt: data.expiresAt,
       deviceId: data.deviceId ?? null,
     });
+  }
+
+  findByHash(tokenHash: string): Promise<RefreshToken | null> {
+    return this.repository.findOne({ where: { tokenHash } });
+  }
+
+  async revoke(id: string): Promise<void> {
+    await this.repository.update({ id }, { revokedAt: new Date() });
+  }
+
+  async revokeAllForUser(userId: string): Promise<void> {
+    await this.repository.update(
+      { userId, revokedAt: IsNull() },
+      { revokedAt: new Date() },
+    );
   }
 }

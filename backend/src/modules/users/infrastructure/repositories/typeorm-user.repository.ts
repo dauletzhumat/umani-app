@@ -43,4 +43,8 @@ export class TypeOrmUserRepository implements UserRepository {
       defaultCurrency: 'KZT',
     });
   }
+
+  findById(id: string): Promise<User | null> {
+    return this.repository.findOne({ where: { id } });
+  }
 }

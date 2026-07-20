@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -14,10 +15,14 @@ import {
   ACCESS_TOKEN_TTL_SECONDS,
   JwtService,
 } from './infrastructure/services/jwt.service';
+import { JwtAuthGuard } from './infrastructure/guards/jwt-auth.guard';
 import { OtpIssuerService } from './application/services/otp-issuer.service';
+import { TokenIssuerService } from './application/services/token-issuer.service';
 import { RegisterUseCase } from './application/use-cases/register.use-case';
 import { LoginUseCase } from './application/use-cases/login.use-case';
 import { VerifyOtpUseCase } from './application/use-cases/verify-otp.use-case';
+import { RefreshTokenUseCase } from './application/use-cases/refresh-token.use-case';
+import { LogoutUseCase } from './application/use-cases/logout.use-case';
 import { AuthController } from './infrastructure/controllers/auth.controller';
 
 @Module({
@@ -40,12 +45,16 @@ import { AuthController } from './infrastructure/controllers/auth.controller';
       provide: RefreshTokenRepository,
       useClass: TypeOrmRefreshTokenRepository,
     },
+    { provide: APP_GUARD, useClass: JwtAuthGuard },
     OtpSenderService,
     OtpIssuerService,
+    TokenIssuerService,
     JwtService,
     RegisterUseCase,
     LoginUseCase,
     VerifyOtpUseCase,
+    RefreshTokenUseCase,
+    LogoutUseCase,
   ],
 })
 export class AuthModule {}
