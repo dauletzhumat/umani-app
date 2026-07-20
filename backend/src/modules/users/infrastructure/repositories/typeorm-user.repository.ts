@@ -60,4 +60,16 @@ export class TypeOrmUserRepository implements UserRepository {
       defaultCurrency: 'KZT',
     });
   }
+
+  async update(
+    id: string,
+    changes: { name?: string; locale?: string; defaultCurrency?: string },
+  ): Promise<User> {
+    await this.repository.update({ id }, changes);
+    const updated = await this.repository.findOne({ where: { id } });
+    if (!updated) {
+      throw new Error('User disappeared during update');
+    }
+    return updated;
+  }
 }

@@ -19,4 +19,9 @@ export abstract class UserRepository {
     id: string,
     identifier: { phone: string | null; email: string | null },
   ): Promise<User>;
+
+  abstract update(
+    id: string,
+    changes: { name?: string; locale?: string; defaultCurrency?: string },
+  ): Promise<User>;
 }
