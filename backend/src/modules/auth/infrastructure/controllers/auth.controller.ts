@@ -14,7 +14,7 @@ import { LogoutDto } from '../dto/logout.dto';
 import { Public } from '../../../../shared/decorators/public.decorator';
 import { CurrentUser } from '../../../../shared/decorators/current-user.decorator';
 import { AppException } from '../../../../shared/exceptions/app.exception';
-import type { AccessTokenPayload } from '../services/jwt.service';
+import type { AccessTokenPayload } from '../../../../shared/types/access-token-payload';
 
 @Controller('auth')
 export class AuthController {
