@@ -1,17 +1,13 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcryptjs';
-import { randomUUID } from 'crypto';
 import { UserRepository } from '../../../users/domain/repositories/user.repository';
 import { AppException } from '../../../../shared/exceptions/app.exception';
 import { parseIdentifier } from '../../../../shared/utils/identifier';
-import { hashToken } from '../../../../shared/utils/hash-token';
 import { VerifyOtpDto } from '../../infrastructure/dto/verify-otp.dto';
 import { OtpCodeRepository } from '../../domain/repositories/otp-code.repository';
-import { RefreshTokenRepository } from '../../domain/repositories/refresh-token.repository';
-import { JwtService } from '../../infrastructure/services/jwt.service';
+import { TokenIssuerService } from '../services/token-issuer.service';
 
 const MAX_OTP_ATTEMPTS = 5;
-const REFRESH_TOKEN_TTL_SECONDS = 30 * 24 * 60 * 60;
 
 export interface VerifyOtpResult {
   accessToken: string;
@@ -33,8 +29,7 @@ export class VerifyOtpUseCase {
   constructor(
     private readonly otpCodeRepository: OtpCodeRepository,
     private readonly userRepository: UserRepository,
-    private readonly refreshTokenRepository: RefreshTokenRepository,
-    private readonly jwtService: JwtService,
+    private readonly tokenIssuerService: TokenIssuerService,
   ) {}
 
   async execute(dto: VerifyOtpDto): Promise<VerifyOtpResult> {
@@ -102,20 +97,8 @@ export class VerifyOtpUseCase {
       isNewUser = true;
     }
 
-    const { accessToken, expiresIn } = this.jwtService.signAccessToken({
-      sub: user.id,
-      scope: 'full',
-      // No subscription table exists yet in the MVP schema — every user
-      // starts on trial until Premium Infrastructure (Beta) lands.
-      premiumStatus: 'trial',
-    });
-
-    const refreshToken = randomUUID();
-    await this.refreshTokenRepository.create({
-      userId: user.id,
-      tokenHash: hashToken(refreshToken),
-      expiresAt: new Date(Date.now() + REFRESH_TOKEN_TTL_SECONDS * 1000),
-    });
+    const { accessToken, refreshToken, expiresIn } =
+      await this.tokenIssuerService.issue(user.id);
 
     return {
       accessToken,
