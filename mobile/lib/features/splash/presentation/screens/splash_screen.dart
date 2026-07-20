@@ -1,38 +1,44 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
+import '../../../../core/storage/session_storage.dart';
 
-/// Brand splash shown on cold start (docs/05_UX.md §2).
+/// Brand splash shown on cold start (docs/05_UX.md §2) — also where the
+/// session check that decides Dashboard vs. Onboarding happens, per the
+/// doc ("пока грузятся начальные данные (проверка сессии, локали)").
 ///
-/// No interactive elements. Session/locale branching after the timeout
-/// belongs to T1.7 — here [onTimeout] is a plain hook the caller wires up.
+/// No interactive elements. [checkSession] defaults to a real
+/// [SessionStorage] lookup; tests inject a fake instead.
 class SplashScreen extends StatefulWidget {
   const SplashScreen({
     super.key,
-    this.onTimeout,
+    required this.onFinished,
     this.duration = const Duration(milliseconds: 1500),
+    this.checkSession,
   });
 
-  final VoidCallback? onTimeout;
+  final ValueChanged<bool> onFinished;
   final Duration duration;
+  final Future<bool> Function()? checkSession;
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  Timer? _timer;
-
   @override
   void initState() {
     super.initState();
-    _timer = Timer(widget.duration, () => widget.onTimeout?.call());
+    _bootstrap();
   }
 
-  @override
-  void dispose() {
-    _timer?.cancel();
-    super.dispose();
+  Future<void> _bootstrap() async {
+    final checkSession = widget.checkSession ?? SessionStorage().hasSession;
+    final sessionFuture = checkSession();
+
+    await Future<void>.delayed(widget.duration);
+    final hasSession = await sessionFuture;
+
+    if (!mounted) return;
+    widget.onFinished(hasSession);
   }
 
   @override
