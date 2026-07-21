@@ -16,6 +16,9 @@ class _ThrowingAuthRepository implements AuthRepository {
   Future<void> login(String identifier) async {}
 
   @override
+  Future<String> startGuestSession() async => 'guest-token';
+
+  @override
   Future<VerifyOtpResult> verifyOtp(String identifier, String code) async {
     throw const ApiException(code: 'OTP_INVALID', message: 'Invalid code');
   }

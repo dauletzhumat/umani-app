@@ -7,6 +7,7 @@ import 'core/localization/locale_provider.dart';
 import 'core/theme/app_theme.dart';
 import 'features/auth/data/repositories/auth_repository_impl.dart';
 import 'features/auth/domain/repositories/auth_repository.dart';
+import 'features/auth/presentation/screens/auth_choice_screen.dart';
 import 'features/auth/presentation/screens/login_screen.dart';
 import 'features/auth/presentation/screens/otp_verify_screen.dart';
 import 'features/auth/presentation/screens/register_screen.dart';
@@ -72,42 +73,24 @@ class App extends ConsumerWidget {
   void _afterOnboarding(BuildContext context) {
     if (!context.mounted) return;
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => const _AuthChoiceStub()),
+      MaterialPageRoute(builder: (_) => const _AuthChoiceRoute()),
     );
   }
 }
 
-/// Stand-in for the real auth-choice screen (T1.10, which also adds
-/// "Продолжить как гость"). Just enough to reach Register/Login/OTP,
-/// built in T1.9, from a running app.
-class _AuthChoiceStub extends ConsumerWidget {
-  const _AuthChoiceStub();
+/// docs/04_User_Flows.md §3, Экран 4 — wires AuthChoiceScreen (T1.10) to
+/// Register/Login/OTP (T1.9) and to the guest path.
+class _AuthChoiceRoute extends ConsumerWidget {
+  const _AuthChoiceRoute();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final l10n = AppLocalizations.of(context);
     final authRepository = ref.read(authRepositoryProvider);
 
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              FilledButton(
-                onPressed: () => _openRegister(context, authRepository),
-                child: Text(l10n.authSignUpButton),
-              ),
-              const SizedBox(height: 12),
-              OutlinedButton(
-                onPressed: () => _openLogin(context, authRepository),
-                child: Text(l10n.authLogInButton),
-              ),
-            ],
-          ),
-        ),
-      ),
+    return AuthChoiceScreen(
+      onRegisterTap: () => _openRegister(context, authRepository),
+      onLoginTap: () => _openLogin(context, authRepository),
+      onGuestStarted: () => _afterGuestStarted(context),
     );
   }
 
@@ -169,6 +152,13 @@ class _AuthChoiceStub extends ConsumerWidget {
                     ? const _InitialSetupPlaceholder()
                     : const _DashboardPlaceholder(),
       ),
+      (route) => false,
+    );
+  }
+
+  void _afterGuestStarted(BuildContext context) {
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (_) => const _InitialSetupPlaceholder()),
       (route) => false,
     );
   }

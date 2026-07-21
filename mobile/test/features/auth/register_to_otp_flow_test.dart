@@ -21,6 +21,9 @@ class _FakeAuthRepository implements AuthRepository {
   Future<void> login(String identifier) async {}
 
   @override
+  Future<String> startGuestSession() async => 'guest-token';
+
+  @override
   Future<VerifyOtpResult> verifyOtp(String identifier, String code) async {
     return const VerifyOtpResult(
       accessToken: 'access-token',

@@ -53,6 +53,7 @@ class AppLocalizations {
       'authRegisterLink': 'Регистрация',
       'authSignUpButton': 'Зарегистрироваться',
       'authLogInButton': 'Войти',
+      'authContinueAsGuest': 'Продолжить как гость',
       'otpTitle': 'Подтверждение кода',
       'otpSentTo': 'Код отправлен на {value}',
       'otpVerifyButton': 'Подтвердить',
@@ -99,6 +100,7 @@ class AppLocalizations {
       'authRegisterLink': 'Тіркелу',
       'authSignUpButton': 'Тіркелу',
       'authLogInButton': 'Кіру',
+      'authContinueAsGuest': 'Қонақ ретінде жалғастыру',
       'otpTitle': 'Кодты растау',
       'otpSentTo': 'Код мына мекенжайға жіберілді: {value}',
       'otpVerifyButton': 'Растау',
@@ -143,6 +145,7 @@ class AppLocalizations {
       'authRegisterLink': 'Sign up',
       'authSignUpButton': 'Sign up',
       'authLogInButton': 'Log in',
+      'authContinueAsGuest': 'Continue as guest',
       'otpTitle': 'Verify code',
       'otpSentTo': 'Code sent to {value}',
       'otpVerifyButton': 'Verify',
@@ -193,6 +196,7 @@ class AppLocalizations {
   String get authRegisterLink => _string('authRegisterLink');
   String get authSignUpButton => _string('authSignUpButton');
   String get authLogInButton => _string('authLogInButton');
+  String get authContinueAsGuest => _string('authContinueAsGuest');
 
   String get otpTitle => _string('otpTitle');
   String otpSentTo(String identifier) => _template('otpSentTo', identifier);

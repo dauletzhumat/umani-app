@@ -19,6 +19,9 @@ class AuthRemoteDatasource {
   Future<Map<String, dynamic>> verifyOtp(String identifier, String code) =>
       _post('/auth/otp/verify', {'identifier': identifier, 'code': code});
 
+  Future<Map<String, dynamic>> startGuestSession() =>
+      _post('/auth/guest', const {});
+
   Future<Map<String, dynamic>> _post(
     String path,
     Map<String, dynamic> body,
