@@ -11,6 +11,15 @@ import { ResponseInterceptor } from './shared/interceptors/response.interceptor'
 export function setupApp(app: INestApplication): void {
   app.setGlobalPrefix('api/v1', { exclude: ['health'] });
 
+  // Mobile clients (native HTTP) never hit this — it's the Flutter *web*
+  // build (and any future browser-based client) that needs it, since it
+  // runs on its own dev-server origin (e.g. localhost:5050) while the API
+  // is on another (localhost:3000). Auth uses a Bearer header, not
+  // cookies, so credentials aren't needed. Reflecting any origin is fine
+  // for local dev; tighten to an explicit allow-list before any public
+  // deployment (T0.5, still deferred).
+  app.enableCors({ origin: true });
+
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
