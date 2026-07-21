@@ -11,6 +11,7 @@ import 'features/auth/presentation/screens/auth_choice_screen.dart';
 import 'features/auth/presentation/screens/login_screen.dart';
 import 'features/auth/presentation/screens/otp_verify_screen.dart';
 import 'features/auth/presentation/screens/register_screen.dart';
+import 'features/onboarding/presentation/screens/initial_setup_screen.dart';
 import 'features/onboarding/presentation/screens/language_screen.dart';
 import 'features/onboarding/presentation/screens/onboarding_carousel_screen.dart';
 import 'features/splash/presentation/screens/splash_screen.dart';
@@ -144,36 +145,40 @@ class _AuthChoiceRoute extends ConsumerWidget {
   }
 
   void _afterVerify(BuildContext context, bool isNewUser) {
+    if (isNewUser) {
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder:
+              (_) => InitialSetupScreen(
+                onFinished: () => _afterInitialSetup(context),
+              ),
+        ),
+        (route) => false,
+      );
+      return;
+    }
     Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(
-        builder:
-            (_) =>
-                isNewUser
-                    ? const _InitialSetupPlaceholder()
-                    : const _DashboardPlaceholder(),
-      ),
+      MaterialPageRoute(builder: (_) => const _DashboardPlaceholder()),
       (route) => false,
     );
   }
 
   void _afterGuestStarted(BuildContext context) {
     Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (_) => const _InitialSetupPlaceholder()),
+      MaterialPageRoute(
+        builder:
+            (_) => InitialSetupScreen(
+              onFinished: () => _afterInitialSetup(context),
+            ),
+      ),
       (route) => false,
     );
   }
-}
 
-/// Stand-in until initial account setup (T1.12) exists.
-class _InitialSetupPlaceholder extends StatelessWidget {
-  const _InitialSetupPlaceholder();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text(AppLocalizations.of(context).initialSetupPlaceholder),
-      ),
+  void _afterInitialSetup(BuildContext context) {
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (_) => const _DashboardPlaceholder()),
+      (route) => false,
     );
   }
 }

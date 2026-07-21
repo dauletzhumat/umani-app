@@ -59,7 +59,15 @@ class AppLocalizations {
       'otpVerifyButton': 'Подтвердить',
       'otpResend': 'Отправить код повторно',
       'otpResendIn': 'Повторная отправка через {value} с',
-      'initialSetupPlaceholder': 'Первичная настройка: скоро',
+      'initialSetupCurrencyTitle': 'Выберите основную валюту',
+      'initialSetupMultiCurrencyToggle':
+          'Буду использовать несколько валют',
+      'initialSetupGoalsTitle': 'Зачем вам AI Finance?',
+      'goalUnderstandSpending': 'Понять, куда уходят деньги',
+      'goalSaveForTarget': 'Накопить на цель',
+      'goalManageInstallments': 'Разобраться с рассрочками/долгами',
+      'goalFamilyBudget': 'Вести бюджет с семьёй/партнёром',
+      'goalInvestments': 'Инвестиции и net worth',
       'errorOtpInvalid': 'Неверный код',
       'errorOtpExpired': 'Код истёк, запросите новый',
       'errorTooManyAttempts':
@@ -106,7 +114,14 @@ class AppLocalizations {
       'otpVerifyButton': 'Растау',
       'otpResend': 'Кодты қайта жіберу',
       'otpResendIn': 'Қайта жіберу: {value} с кейін',
-      'initialSetupPlaceholder': 'Бастапқы баптау: жақында',
+      'initialSetupCurrencyTitle': 'Негізгі валютаны таңдаңыз',
+      'initialSetupMultiCurrencyToggle': 'Бірнеше валюта қолданамын',
+      'initialSetupGoalsTitle': 'AI Finance сізге не үшін керек?',
+      'goalUnderstandSpending': 'Ақша қайда кететінін түсіну',
+      'goalSaveForTarget': 'Мақсатқа ақша жинау',
+      'goalManageInstallments': 'Бөліп төлеулерді/қарыздарды реттеу',
+      'goalFamilyBudget': 'Отбасымен/серіктеспен бюджет жүргізу',
+      'goalInvestments': 'Инвестициялар және net worth',
       'errorOtpInvalid': 'Код қате',
       'errorOtpExpired': 'Кодтың мерзімі өтті, жаңасын сұраңыз',
       'errorTooManyAttempts': 'Тым көп әрекет, жаңа код сұраңыз',
@@ -151,7 +166,14 @@ class AppLocalizations {
       'otpVerifyButton': 'Verify',
       'otpResend': 'Resend code',
       'otpResendIn': 'Resend in {value}s',
-      'initialSetupPlaceholder': 'Initial setup: coming soon',
+      'initialSetupCurrencyTitle': 'Choose your main currency',
+      'initialSetupMultiCurrencyToggle': "I'll use multiple currencies",
+      'initialSetupGoalsTitle': 'Why AI Finance?',
+      'goalUnderstandSpending': 'Understand where money goes',
+      'goalSaveForTarget': 'Save up for a goal',
+      'goalManageInstallments': 'Get a handle on installments/debt',
+      'goalFamilyBudget': 'Budget with family/partner',
+      'goalInvestments': 'Investments and net worth',
       'errorOtpInvalid': 'Invalid code',
       'errorOtpExpired': 'Code expired, request a new one',
       'errorTooManyAttempts': 'Too many attempts, request a new code',
@@ -205,7 +227,16 @@ class AppLocalizations {
   String otpResendIn(int seconds) =>
       _template('otpResendIn', seconds.toString());
 
-  String get initialSetupPlaceholder => _string('initialSetupPlaceholder');
+  String get initialSetupCurrencyTitle =>
+      _string('initialSetupCurrencyTitle');
+  String get initialSetupMultiCurrencyToggle =>
+      _string('initialSetupMultiCurrencyToggle');
+  String get initialSetupGoalsTitle => _string('initialSetupGoalsTitle');
+  String get goalUnderstandSpending => _string('goalUnderstandSpending');
+  String get goalSaveForTarget => _string('goalSaveForTarget');
+  String get goalManageInstallments => _string('goalManageInstallments');
+  String get goalFamilyBudget => _string('goalFamilyBudget');
+  String get goalInvestments => _string('goalInvestments');
 
   String get errorOtpInvalid => _string('errorOtpInvalid');
   String get errorOtpExpired => _string('errorOtpExpired');
