@@ -1,16 +1,18 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-/// Presence check + basic read/write for now. Full auto-refresh handling
-/// (silently rotating the token on 401, wiring it into every request) is
-/// T1.11's job; it reuses this same storage key.
+/// Reads/writes the refresh token — the one piece of session state that's
+/// persisted (access token stays in-memory only, see AccessTokenNotifier).
 class SessionStorage {
   static const refreshTokenKey = 'refresh_token';
 
   final _storage = const FlutterSecureStorage();
 
+  Future<String?> readRefreshToken() {
+    return _storage.read(key: refreshTokenKey);
+  }
+
   Future<bool> hasSession() async {
-    final token = await _storage.read(key: refreshTokenKey);
-    return token != null;
+    return (await readRefreshToken()) != null;
   }
 
   Future<void> saveRefreshToken(String token) {
