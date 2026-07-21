@@ -33,4 +33,8 @@ abstract class AuthRepository {
   Future<void> login(String identifier);
 
   Future<VerifyOtpResult> verifyOtp(String identifier, String code);
+
+  /// POST /auth/guest — access token only, scope: guest, no refresh
+  /// token (docs/08_API.md §2: "сессия только на устройстве").
+  Future<String> startGuestSession();
 }

@@ -18,6 +18,12 @@ class AuthRepositoryImpl implements AuthRepository {
     final json = await _datasource.verifyOtp(identifier, code);
     return VerifyOtpResult.fromJson(json);
   }
+
+  @override
+  Future<String> startGuestSession() async {
+    final json = await _datasource.startGuestSession();
+    return json['accessToken'] as String;
+  }
 }
 
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
