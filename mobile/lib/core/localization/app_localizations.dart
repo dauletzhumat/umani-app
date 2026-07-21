@@ -28,7 +28,20 @@ class AppLocalizations {
       'languageRu': 'Русский',
       'languageKk': 'Қазақша',
       'languageEn': 'English',
-      'onboardingPlaceholder': 'Онбординг: скоро',
+      'authChoicePlaceholder': 'Регистрация / Вход: скоро',
+      'onboardingSkip': 'Пропустить',
+      'onboardingNext': 'Далее',
+      'onboardingGetStarted': 'Начать',
+      'onboardingValue1Title': 'Фиксируй траты за секунды',
+      'onboardingValue1Subtitle':
+          'Сфотографируй чек или надиктуй трату голосом — остальное сделает AI',
+      'onboardingValue2Title': 'Держи под контролем все рассрочки',
+      'onboardingValue2Subtitle':
+          'Сводная карта долгов по всем рассрочкам — видно всё сразу, без сюрпризов',
+      'onboardingValue3Title':
+          'AI-помощник, который говорит на твоём языке',
+      'onboardingValue3Subtitle':
+          'Задавай вопросы о своих финансах на русском, казахском или английском',
     },
     'kk': {
       'appName': 'AI Finance',
@@ -36,7 +49,19 @@ class AppLocalizations {
       'languageRu': 'Русский',
       'languageKk': 'Қазақша',
       'languageEn': 'English',
-      'onboardingPlaceholder': 'Таныстыру: жақында',
+      'authChoicePlaceholder': 'Тіркелу / Кіру: жақында',
+      'onboardingSkip': 'Өткізу',
+      'onboardingNext': 'Келесі',
+      'onboardingGetStarted': 'Бастау',
+      'onboardingValue1Title': 'Шығынды секунд ішінде тіркеп ал',
+      'onboardingValue1Subtitle':
+          'Чектің фотосын түсір немесе шығынды дауыспен айт — қалғанын AI жасайды',
+      'onboardingValue2Title': 'Барлық бөліп төлеулерді бақылауда ұста',
+      'onboardingValue2Subtitle':
+          'Барлық бөліп төлеулер бойынша борыш картасы — бәрі бір көзқараста, тосынсыздықсыз',
+      'onboardingValue3Title': 'Өз тіліңде сөйлейтін AI-көмекші',
+      'onboardingValue3Subtitle':
+          'Қаржың туралы сұрақтарды орысша, қазақша немесе ағылшынша қой',
     },
     'en': {
       'appName': 'AI Finance',
@@ -44,7 +69,19 @@ class AppLocalizations {
       'languageRu': 'Русский',
       'languageKk': 'Қазақша',
       'languageEn': 'English',
-      'onboardingPlaceholder': 'Onboarding: coming soon',
+      'authChoicePlaceholder': 'Sign up / Log in: coming soon',
+      'onboardingSkip': 'Skip',
+      'onboardingNext': 'Next',
+      'onboardingGetStarted': 'Get Started',
+      'onboardingValue1Title': 'Log expenses in seconds',
+      'onboardingValue1Subtitle':
+          'Snap a photo of a receipt or say it out loud — AI does the rest',
+      'onboardingValue2Title': 'Stay on top of every installment plan',
+      'onboardingValue2Subtitle':
+          'One summary of all your installment debt — nothing sneaks up on you',
+      'onboardingValue3Title': 'An AI assistant that speaks your language',
+      'onboardingValue3Subtitle':
+          'Ask about your finances in Russian, Kazakh, or English',
     },
   };
 
@@ -56,7 +93,16 @@ class AppLocalizations {
   String get languageRu => _string('languageRu');
   String get languageKk => _string('languageKk');
   String get languageEn => _string('languageEn');
-  String get onboardingPlaceholder => _string('onboardingPlaceholder');
+  String get authChoicePlaceholder => _string('authChoicePlaceholder');
+  String get onboardingSkip => _string('onboardingSkip');
+  String get onboardingNext => _string('onboardingNext');
+  String get onboardingGetStarted => _string('onboardingGetStarted');
+  String get onboardingValue1Title => _string('onboardingValue1Title');
+  String get onboardingValue1Subtitle => _string('onboardingValue1Subtitle');
+  String get onboardingValue2Title => _string('onboardingValue2Title');
+  String get onboardingValue2Subtitle => _string('onboardingValue2Subtitle');
+  String get onboardingValue3Title => _string('onboardingValue3Title');
+  String get onboardingValue3Subtitle => _string('onboardingValue3Subtitle');
 }
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

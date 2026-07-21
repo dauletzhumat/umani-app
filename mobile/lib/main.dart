@@ -6,6 +6,7 @@ import 'core/localization/app_localizations.dart';
 import 'core/localization/locale_provider.dart';
 import 'core/theme/app_theme.dart';
 import 'features/onboarding/presentation/screens/language_screen.dart';
+import 'features/onboarding/presentation/screens/onboarding_carousel_screen.dart';
 import 'features/splash/presentation/screens/splash_screen.dart';
 
 void main() {
@@ -53,20 +54,34 @@ class App extends ConsumerWidget {
 
   void _afterLanguage(BuildContext context) {
     if (!context.mounted) return;
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder:
+            (_) => OnboardingCarouselScreen(
+              onFinished: () => _afterOnboarding(context),
+            ),
+      ),
+    );
+  }
+
+  void _afterOnboarding(BuildContext context) {
+    if (!context.mounted) return;
     Navigator.of(
       context,
-    ).pushReplacement(MaterialPageRoute(builder: (_) => const _OnboardingPlaceholder()));
+    ).pushReplacement(MaterialPageRoute(builder: (_) => const _AuthChoicePlaceholder()));
   }
 }
 
-/// Stand-in until Onboarding (T1.8) exists.
-class _OnboardingPlaceholder extends StatelessWidget {
-  const _OnboardingPlaceholder();
+/// Stand-in until the auth-choice screen (T1.10) exists.
+class _AuthChoicePlaceholder extends StatelessWidget {
+  const _AuthChoicePlaceholder();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Text(AppLocalizations.of(context).onboardingPlaceholder)),
+      body: Center(
+        child: Text(AppLocalizations.of(context).authChoicePlaceholder),
+      ),
     );
   }
 }
