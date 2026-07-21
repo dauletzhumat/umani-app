@@ -77,6 +77,11 @@ class AppLocalizations {
       'errorUserNotFound': 'Аккаунт с этим номером не найден',
       'errorValidation': 'Проверьте правильность введённых данных',
       'errorNetwork': 'Не удалось подключиться, проверьте соединение',
+      'categoryPickerTitle': 'Выберите категорию',
+      'categoryPickerCreateNew': '+ Своя категория',
+      'categoryCreateNameLabel': 'Название',
+      'categoryCreateButton': 'Создать',
+      'categoryCreateCancel': 'Отмена',
     },
     'kk': {
       'appName': 'AI Finance',
@@ -129,6 +134,11 @@ class AppLocalizations {
       'errorUserNotFound': 'Бұл нөмірмен аккаунт табылмады',
       'errorValidation': 'Енгізген деректерді тексеріңіз',
       'errorNetwork': 'Қосылу мүмкін болмады, желіні тексеріңіз',
+      'categoryPickerTitle': 'Санатты таңдаңыз',
+      'categoryPickerCreateNew': '+ Жеке санат',
+      'categoryCreateNameLabel': 'Атауы',
+      'categoryCreateButton': 'Жасау',
+      'categoryCreateCancel': 'Бас тарту',
     },
     'en': {
       'appName': 'AI Finance',
@@ -182,6 +192,11 @@ class AppLocalizations {
       'errorUserNotFound': 'No account found for this identifier',
       'errorValidation': 'Please check what you entered',
       'errorNetwork': 'Could not connect, check your connection',
+      'categoryPickerTitle': 'Choose a category',
+      'categoryPickerCreateNew': '+ Custom category',
+      'categoryCreateNameLabel': 'Name',
+      'categoryCreateButton': 'Create',
+      'categoryCreateCancel': 'Cancel',
     },
   };
 
@@ -245,6 +260,12 @@ class AppLocalizations {
   String get errorUserNotFound => _string('errorUserNotFound');
   String get errorValidation => _string('errorValidation');
   String get errorNetwork => _string('errorNetwork');
+
+  String get categoryPickerTitle => _string('categoryPickerTitle');
+  String get categoryPickerCreateNew => _string('categoryPickerCreateNew');
+  String get categoryCreateNameLabel => _string('categoryCreateNameLabel');
+  String get categoryCreateButton => _string('categoryCreateButton');
+  String get categoryCreateCancel => _string('categoryCreateCancel');
 
   /// Maps a backend error `code` (docs/08_API.md §5) to localized text,
   /// falling back to the raw message the server sent for anything not
