@@ -5,6 +5,8 @@ import { RefreshToken } from '../modules/auth/domain/entities/refresh-token.enti
 import { OtpCode } from '../modules/auth/domain/entities/otp-code.entity';
 import { Category } from '../modules/categories/domain/entities/category.entity';
 import { Account } from '../modules/accounts/domain/entities/account.entity';
+import { Transaction } from '../modules/transactions/domain/entities/transaction.entity';
+import { ReceiptScan } from '../modules/ocr/domain/entities/receipt-scan.entity';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
@@ -13,6 +15,14 @@ export const AppDataSource = new DataSource({
   username: process.env.POSTGRES_USER ?? 'ai_finance',
   password: process.env.POSTGRES_PASSWORD ?? 'ai_finance',
   database: process.env.POSTGRES_DB ?? 'ai_finance',
-  entities: [User, RefreshToken, OtpCode, Category, Account],
+  entities: [
+    User,
+    RefreshToken,
+    OtpCode,
+    Category,
+    Account,
+    Transaction,
+    ReceiptScan,
+  ],
   migrations: [__dirname + '/migrations/*.{ts,js}'],
 });
