@@ -39,22 +39,31 @@ class App extends ConsumerWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      home: SplashScreen(
-        onFinished: (hasSession) => _afterSplash(context, hasSession),
+      home: Builder(
+        builder:
+            (context) => SplashScreen(
+              onFinished: (hasSession) => _afterSplash(context, hasSession),
+            ),
       ),
     );
   }
 
+  // Each route builder below rebinds `context` to that route's own content
+  // context (a descendant of the Navigator MaterialApp creates internally)
+  // rather than reusing the caller's — `App.build`'s context sits above
+  // MaterialApp and has no Navigator ancestor, so Navigator.of(context)
+  // throws if that outer context leaks into these callbacks instead.
   void _afterSplash(BuildContext context, bool hasSession) {
     if (!context.mounted) return;
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
-        builder: (_) =>
-            hasSession
-                ? const _DashboardPlaceholder()
-                : LanguageScreen(
-                  onLanguageSelected: () => _afterLanguage(context),
-                ),
+        builder:
+            (context) =>
+                hasSession
+                    ? const _DashboardPlaceholder()
+                    : LanguageScreen(
+                      onLanguageSelected: () => _afterLanguage(context),
+                    ),
       ),
     );
   }
@@ -64,7 +73,7 @@ class App extends ConsumerWidget {
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder:
-            (_) => OnboardingCarouselScreen(
+            (context) => OnboardingCarouselScreen(
               onFinished: () => _afterOnboarding(context),
             ),
       ),
