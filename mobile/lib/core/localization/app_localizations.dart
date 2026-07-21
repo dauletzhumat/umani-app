@@ -89,6 +89,15 @@ class AppLocalizations {
       'accountDetailTitle': 'Детали счёта',
       'accountDetailArchive': 'Архивировать счёт',
       'accountDetailUnarchive': 'Вернуть из архива',
+      'addAccountSheetTitle': 'Добавить счёт',
+      'addAccountOptionCash': 'Наличные',
+      'addAccountOptionManual': 'Ручной счёт',
+      'addAccountNameLabel': 'Название',
+      'addAccountCurrencyLabel': 'Валюта',
+      'addAccountTypeLabel': 'Тип счёта',
+      'addAccountTypeBank': 'Банк',
+      'addAccountTypeCard': 'Карта',
+      'addAccountSaveButton': 'Сохранить',
     },
     'kk': {
       'appName': 'AI Finance',
@@ -153,6 +162,15 @@ class AppLocalizations {
       'accountDetailTitle': 'Шот туралы мәлімет',
       'accountDetailArchive': 'Шотты мұрағаттау',
       'accountDetailUnarchive': 'Мұрағаттан қайтару',
+      'addAccountSheetTitle': 'Шот қосу',
+      'addAccountOptionCash': 'Қолма-қол ақша',
+      'addAccountOptionManual': 'Қолмен енгізілетін шот',
+      'addAccountNameLabel': 'Атауы',
+      'addAccountCurrencyLabel': 'Валюта',
+      'addAccountTypeLabel': 'Шот түрі',
+      'addAccountTypeBank': 'Банк',
+      'addAccountTypeCard': 'Карта',
+      'addAccountSaveButton': 'Сақтау',
     },
     'en': {
       'appName': 'AI Finance',
@@ -218,6 +236,15 @@ class AppLocalizations {
       'accountDetailTitle': 'Account details',
       'accountDetailArchive': 'Archive account',
       'accountDetailUnarchive': 'Unarchive',
+      'addAccountSheetTitle': 'Add account',
+      'addAccountOptionCash': 'Cash',
+      'addAccountOptionManual': 'Manual account',
+      'addAccountNameLabel': 'Name',
+      'addAccountCurrencyLabel': 'Currency',
+      'addAccountTypeLabel': 'Account type',
+      'addAccountTypeBank': 'Bank',
+      'addAccountTypeCard': 'Card',
+      'addAccountSaveButton': 'Save',
     },
   };
 
@@ -295,6 +322,16 @@ class AppLocalizations {
   String get accountDetailTitle => _string('accountDetailTitle');
   String get accountDetailArchive => _string('accountDetailArchive');
   String get accountDetailUnarchive => _string('accountDetailUnarchive');
+
+  String get addAccountSheetTitle => _string('addAccountSheetTitle');
+  String get addAccountOptionCash => _string('addAccountOptionCash');
+  String get addAccountOptionManual => _string('addAccountOptionManual');
+  String get addAccountNameLabel => _string('addAccountNameLabel');
+  String get addAccountCurrencyLabel => _string('addAccountCurrencyLabel');
+  String get addAccountTypeLabel => _string('addAccountTypeLabel');
+  String get addAccountTypeBank => _string('addAccountTypeBank');
+  String get addAccountTypeCard => _string('addAccountTypeCard');
+  String get addAccountSaveButton => _string('addAccountSaveButton');
 
   /// Maps a backend error `code` (docs/08_API.md §5) to localized text,
   /// falling back to the raw message the server sent for anything not

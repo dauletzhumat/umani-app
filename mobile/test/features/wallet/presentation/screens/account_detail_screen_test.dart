@@ -24,6 +24,15 @@ class _FakeAccountRepository implements AccountRepository {
   Future<List<Account>> fetchAll() async => const [_account];
 
   @override
+  Future<Account> create({
+    required AccountType type,
+    required String name,
+    required String currency,
+  }) async {
+    throw UnimplementedError();
+  }
+
+  @override
   Future<Account> update(String id, {String? name, bool? archived}) async {
     return _account.copyWith(name: name, archived: archived);
   }

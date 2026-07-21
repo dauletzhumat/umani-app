@@ -27,6 +27,27 @@ class AccountRepositoryImpl implements AccountRepository {
   }
 
   @override
+  Future<Account> create({
+    required AccountType type,
+    required String name,
+    required String currency,
+  }) async {
+    try {
+      final response = await _dio.post<Map<String, dynamic>>(
+        '/accounts',
+        data: {
+          'type': accountTypeToString(type),
+          'name': name,
+          'currency': currency,
+        },
+      );
+      return Account.fromJson(response.data!['data'] as Map<String, dynamic>);
+    } on DioException catch (exception) {
+      throw ApiException.fromDioException(exception);
+    }
+  }
+
+  @override
   Future<Account> update(String id, {String? name, bool? archived}) async {
     try {
       final response = await _dio.patch<Map<String, dynamic>>(
