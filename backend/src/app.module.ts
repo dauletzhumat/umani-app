@@ -5,6 +5,7 @@ import { envValidationSchema } from './config/env-validation.schema';
 import { HealthController } from './modules/health/health.controller';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { CategoriesModule } from './modules/categories/categories.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { AuthModule } from './modules/auth/auth.module';
     }),
     UsersModule,
     AuthModule,
+    CategoriesModule,
   ],
   controllers: [HealthController],
   providers: [],
