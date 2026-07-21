@@ -7,6 +7,7 @@ import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { CategoriesModule } from './modules/categories/categories.module';
 import { AccountsModule } from './modules/accounts/accounts.module';
+import { TransactionsModule } from './modules/transactions/transactions.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { AccountsModule } from './modules/accounts/accounts.module';
     AuthModule,
     CategoriesModule,
     AccountsModule,
+    TransactionsModule,
   ],
   controllers: [HealthController],
   providers: [],
