@@ -51,4 +51,8 @@ export class TypeOrmAccountRepository implements AccountRepository {
   async softDelete(id: string): Promise<void> {
     await this.repository.update({ id }, { deletedAt: new Date() });
   }
+
+  async setBalance(id: string, balance: string): Promise<void> {
+    await this.repository.update({ id }, { balanceCached: balance });
+  }
 }
