@@ -82,6 +82,13 @@ class AppLocalizations {
       'categoryCreateNameLabel': 'Название',
       'categoryCreateButton': 'Создать',
       'categoryCreateCancel': 'Отмена',
+      'walletTitle': 'Кошелёк',
+      'walletEmptyStateMessage': 'Здесь появятся ваши счета',
+      'walletAddAccountButton': 'Добавить счёт',
+      'walletAddAccountCard': '+ Добавить счёт',
+      'accountDetailTitle': 'Детали счёта',
+      'accountDetailArchive': 'Архивировать счёт',
+      'accountDetailUnarchive': 'Вернуть из архива',
     },
     'kk': {
       'appName': 'AI Finance',
@@ -139,6 +146,13 @@ class AppLocalizations {
       'categoryCreateNameLabel': 'Атауы',
       'categoryCreateButton': 'Жасау',
       'categoryCreateCancel': 'Бас тарту',
+      'walletTitle': 'Әмиян',
+      'walletEmptyStateMessage': 'Мұнда сіздің шоттарыңыз пайда болады',
+      'walletAddAccountButton': 'Шот қосу',
+      'walletAddAccountCard': '+ Шот қосу',
+      'accountDetailTitle': 'Шот туралы мәлімет',
+      'accountDetailArchive': 'Шотты мұрағаттау',
+      'accountDetailUnarchive': 'Мұрағаттан қайтару',
     },
     'en': {
       'appName': 'AI Finance',
@@ -197,6 +211,13 @@ class AppLocalizations {
       'categoryCreateNameLabel': 'Name',
       'categoryCreateButton': 'Create',
       'categoryCreateCancel': 'Cancel',
+      'walletTitle': 'Wallet',
+      'walletEmptyStateMessage': 'Your accounts will show up here',
+      'walletAddAccountButton': 'Add account',
+      'walletAddAccountCard': '+ Add account',
+      'accountDetailTitle': 'Account details',
+      'accountDetailArchive': 'Archive account',
+      'accountDetailUnarchive': 'Unarchive',
     },
   };
 
@@ -266,6 +287,14 @@ class AppLocalizations {
   String get categoryCreateNameLabel => _string('categoryCreateNameLabel');
   String get categoryCreateButton => _string('categoryCreateButton');
   String get categoryCreateCancel => _string('categoryCreateCancel');
+
+  String get walletTitle => _string('walletTitle');
+  String get walletEmptyStateMessage => _string('walletEmptyStateMessage');
+  String get walletAddAccountButton => _string('walletAddAccountButton');
+  String get walletAddAccountCard => _string('walletAddAccountCard');
+  String get accountDetailTitle => _string('accountDetailTitle');
+  String get accountDetailArchive => _string('accountDetailArchive');
+  String get accountDetailUnarchive => _string('accountDetailUnarchive');
 
   /// Maps a backend error `code` (docs/08_API.md §5) to localized text,
   /// falling back to the raw message the server sent for anything not
