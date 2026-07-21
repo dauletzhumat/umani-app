@@ -4,6 +4,7 @@ import '../../../../core/localization/app_localizations.dart';
 import '../../data/repositories/account_repository_impl.dart';
 import '../../domain/entities/account.dart';
 import '../widgets/account_carousel.dart';
+import '../widgets/add_account_sheet.dart';
 import 'account_detail_screen.dart';
 
 /// Wallet screen (docs/05_UX.md §5): carousel of accounts, or a dedicated
@@ -16,8 +17,11 @@ import 'account_detail_screen.dart';
 class WalletScreen extends ConsumerWidget {
   const WalletScreen({super.key});
 
-  void _openAddAccountSheet(BuildContext context) {
-    // T3.3 wires the actual "add account" Bottom Sheet here.
+  Future<void> _openAddAccountSheet(BuildContext context, WidgetRef ref) async {
+    final created = await AddAccountSheet.show(context);
+    if (created != null) {
+      ref.invalidate(accountListProvider);
+    }
   }
 
   void _openAccountDetail(BuildContext context, Account account) {
@@ -39,7 +43,7 @@ class WalletScreen extends ConsumerWidget {
             return _EmptyState(
               message: l10n.walletEmptyStateMessage,
               buttonLabel: l10n.walletAddAccountButton,
-              onAddAccountTap: () => _openAddAccountSheet(context),
+              onAddAccountTap: () => _openAddAccountSheet(context, ref),
             );
           }
           return Padding(
@@ -47,7 +51,7 @@ class WalletScreen extends ConsumerWidget {
             child: AccountCarousel(
               accounts: accounts,
               onAccountTap: (account) => _openAccountDetail(context, account),
-              onAddAccountTap: () => _openAddAccountSheet(context),
+              onAddAccountTap: () => _openAddAccountSheet(context, ref),
             ),
           );
         },

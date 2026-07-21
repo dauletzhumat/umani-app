@@ -10,12 +10,32 @@ import 'package:mobile/features/wallet/presentation/screens/wallet_screen.dart';
 import 'package:mobile/features/wallet/presentation/widgets/account_carousel.dart';
 
 class _FakeAccountRepository implements AccountRepository {
-  _FakeAccountRepository(this._accounts);
+  _FakeAccountRepository(List<Account> initial) : _accounts = List.of(initial);
 
   final List<Account> _accounts;
 
   @override
   Future<List<Account>> fetchAll() async => List.unmodifiable(_accounts);
+
+  @override
+  Future<Account> create({
+    required AccountType type,
+    required String name,
+    required String currency,
+  }) async {
+    final created = Account(
+      id: 'created-${_accounts.length}',
+      userId: 'u1',
+      type: type,
+      name: name,
+      currency: currency,
+      balanceCached: '0.00',
+      provider: null,
+      archived: false,
+    );
+    _accounts.add(created);
+    return created;
+  }
 
   @override
   Future<Account> update(String id, {String? name, bool? archived}) async {
@@ -90,4 +110,35 @@ void main() {
     expect(addCardDx, greaterThan(account1Dx));
     expect(addCardDx, greaterThan(account2Dx));
   });
+
+  testWidgets(
+    'adding a cash account (name only) closes the sheet and updates the carousel',
+    (WidgetTester tester) async {
+      await pumpWallet(tester, _FakeAccountRepository(const []));
+
+      // Empty state's "Добавить счёт" opens the sheet.
+      await tester.tap(find.text('Добавить счёт'));
+      await tester.pumpAndSettle();
+
+      await tester.tap(find.text('Наличные'));
+      await tester.pumpAndSettle();
+
+      // Only a name field for the cash variant — no currency/type pickers.
+      expect(find.widgetWithText(TextField, 'Название'), findsOneWidget);
+      expect(find.text('Валюта'), findsNothing);
+      expect(find.text('Тип счёта'), findsNothing);
+
+      await tester.enterText(
+        find.widgetWithText(TextField, 'Название'),
+        'Мои наличные',
+      );
+      await tester.tap(find.text('Сохранить'));
+      await tester.pumpAndSettle();
+
+      // Sheet is gone, carousel now shows the new account.
+      expect(find.text('Добавить счёт'), findsNothing);
+      expect(find.byType(AccountCarousel), findsOneWidget);
+      expect(find.text('Мои наличные'), findsOneWidget);
+    },
+  );
 }
