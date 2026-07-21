@@ -19,4 +19,9 @@ export abstract class AccountRepository {
   ): Promise<Account>;
 
   abstract softDelete(id: string): Promise<void>;
+
+  /** Persists a recomputed balance_cached — distinct from update() since
+   * it's never driven by the PATCH DTO (name/archived), only by
+   * RecalculateAccountBalanceService. */
+  abstract setBalance(id: string, balance: string): Promise<void>;
 }

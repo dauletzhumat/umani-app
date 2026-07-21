@@ -28,6 +28,12 @@ export abstract class TransactionRepository {
 
   abstract findById(id: string): Promise<Transaction | null>;
 
+  /** Net balance (income - expense) across all non-deleted transactions
+   * for the account — the authoritative source for accounts.balance_cached
+   * (docs/06_Architecture.md §9: balance is always recomputed server-side
+   * from transaction history, never trusted from the client). */
+  abstract sumForAccount(accountId: string): Promise<string>;
+
   abstract create(data: {
     userId: string;
     accountId: string;

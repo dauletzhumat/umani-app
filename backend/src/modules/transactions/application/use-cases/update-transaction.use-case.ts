@@ -2,6 +2,7 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import { TransactionRepository } from '../../domain/repositories/transaction.repository';
 import { Transaction } from '../../domain/entities/transaction.entity';
 import { CategoryRepository } from '../../../categories/domain/repositories/category.repository';
+import { RecalculateAccountBalanceService } from '../../../accounts/application/services/recalculate-account-balance.service';
 import { AppException } from '../../../../shared/exceptions/app.exception';
 import { UpdateTransactionDto } from '../../infrastructure/dto/update-transaction.dto';
 
@@ -10,6 +11,7 @@ export class UpdateTransactionUseCase {
   constructor(
     private readonly transactionRepository: TransactionRepository,
     private readonly categoryRepository: CategoryRepository,
+    private readonly recalculateAccountBalanceService: RecalculateAccountBalanceService,
   ) {}
 
   async execute(
@@ -52,7 +54,7 @@ export class UpdateTransactionUseCase {
       }
     }
 
-    return this.transactionRepository.update(transactionId, {
+    const updated = await this.transactionRepository.update(transactionId, {
       categoryId: dto.categoryId,
       amount: dto.amount,
       currency: dto.currency,
@@ -60,5 +62,13 @@ export class UpdateTransactionUseCase {
       occurredAt: dto.occurredAt,
       note: dto.note,
     });
+
+    if (dto.amount !== undefined || dto.type !== undefined) {
+      await this.recalculateAccountBalanceService.recalculate(
+        transaction.accountId,
+      );
+    }
+
+    return updated;
   }
 }

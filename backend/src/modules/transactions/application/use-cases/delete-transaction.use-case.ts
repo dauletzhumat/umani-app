@@ -1,10 +1,14 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { TransactionRepository } from '../../domain/repositories/transaction.repository';
+import { RecalculateAccountBalanceService } from '../../../accounts/application/services/recalculate-account-balance.service';
 import { AppException } from '../../../../shared/exceptions/app.exception';
 
 @Injectable()
 export class DeleteTransactionUseCase {
-  constructor(private readonly transactionRepository: TransactionRepository) {}
+  constructor(
+    private readonly transactionRepository: TransactionRepository,
+    private readonly recalculateAccountBalanceService: RecalculateAccountBalanceService,
+  ) {}
 
   async execute(userId: string, transactionId: string): Promise<void> {
     const transaction =
@@ -19,5 +23,8 @@ export class DeleteTransactionUseCase {
     }
 
     await this.transactionRepository.softDelete(transactionId);
+    await this.recalculateAccountBalanceService.recalculate(
+      transaction.accountId,
+    );
   }
 }

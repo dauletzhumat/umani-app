@@ -3,6 +3,7 @@ import { TransactionRepository } from '../../domain/repositories/transaction.rep
 import { Transaction } from '../../domain/entities/transaction.entity';
 import { AccountRepository } from '../../../accounts/domain/repositories/account.repository';
 import { CategoryRepository } from '../../../categories/domain/repositories/category.repository';
+import { RecalculateAccountBalanceService } from '../../../accounts/application/services/recalculate-account-balance.service';
 import { AppException } from '../../../../shared/exceptions/app.exception';
 import { CreateTransactionDto } from '../../infrastructure/dto/create-transaction.dto';
 
@@ -12,6 +13,7 @@ export class CreateTransactionUseCase {
     private readonly transactionRepository: TransactionRepository,
     private readonly accountRepository: AccountRepository,
     private readonly categoryRepository: CategoryRepository,
+    private readonly recalculateAccountBalanceService: RecalculateAccountBalanceService,
   ) {}
 
   async execute(
@@ -50,7 +52,7 @@ export class CreateTransactionUseCase {
       }
     }
 
-    return this.transactionRepository.create({
+    const transaction = await this.transactionRepository.create({
       userId,
       accountId: dto.accountId,
       categoryId: dto.categoryId ?? null,
@@ -61,5 +63,9 @@ export class CreateTransactionUseCase {
       occurredAt: dto.occurredAt ?? new Date().toISOString().slice(0, 10),
       note: dto.note ?? null,
     });
+
+    await this.recalculateAccountBalanceService.recalculate(dto.accountId);
+
+    return transaction;
   }
 }
