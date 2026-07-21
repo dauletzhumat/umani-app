@@ -6,6 +6,7 @@ import { TypeOrmAccountRepository } from './infrastructure/repositories/account.
 import { CreateAccountUseCase } from './application/use-cases/create-account.use-case';
 import { UpdateAccountUseCase } from './application/use-cases/update-account.use-case';
 import { DeleteAccountUseCase } from './application/use-cases/delete-account.use-case';
+import { AdjustBalanceUseCase } from './application/use-cases/adjust-balance.use-case';
 import { RecalculateAccountBalanceService } from './application/services/recalculate-account-balance.service';
 import { AccountsController } from './infrastructure/controllers/accounts.controller';
 import { Transaction } from '../transactions/domain/entities/transaction.entity';
@@ -27,6 +28,7 @@ import { TypeOrmTransactionRepository } from '../transactions/infrastructure/rep
     CreateAccountUseCase,
     UpdateAccountUseCase,
     DeleteAccountUseCase,
+    AdjustBalanceUseCase,
   ],
   exports: [AccountRepository, RecalculateAccountBalanceService],
 })
