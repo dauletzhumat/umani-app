@@ -14,7 +14,7 @@ export class ReceiptScan {
   imageUrl!: string;
 
   @Column({ name: 'raw_ocr_json', type: 'jsonb', nullable: true })
-  rawOcrJson!: unknown;
+  rawOcrJson!: Record<string, unknown> | null;
 
   @Column({ type: 'varchar', length: 20, default: 'pending' })
   status!: ReceiptScanStatus;

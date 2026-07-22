@@ -7,6 +7,14 @@ export interface CategorizeCompletion {
   confidence: number;
 }
 
+export interface ParsedReceipt {
+  merchant: string | null;
+  totalAmount: string | null;
+  currency: string;
+  date: string | null;
+  lineItems: Array<{ name: string; price: string }>;
+}
+
 /**
  * Thin wrapper around the OpenAI SDK so CategorizationService can be unit
  * tested against a mock instead of hitting the network, and so a missing
@@ -55,6 +63,38 @@ export class OpenAiClientService {
       };
     } catch {
       this.logger.warn('OpenAI categorization response was not valid JSON');
+      return null;
+    }
+  }
+
+  async parseReceipt(
+    prompt: string,
+    model: string,
+    temperature: number,
+  ): Promise<ParsedReceipt | null> {
+    if (!this.client) return null;
+
+    const response = await this.client.chat.completions.create({
+      model,
+      temperature,
+      response_format: { type: 'json_object' },
+      messages: [{ role: 'user', content: prompt }],
+    });
+
+    const content = response.choices[0]?.message?.content;
+    if (!content) return null;
+
+    try {
+      const parsed = JSON.parse(content) as Partial<ParsedReceipt>;
+      return {
+        merchant: parsed.merchant ?? null,
+        totalAmount: parsed.totalAmount ?? null,
+        currency: parsed.currency ?? 'KZT',
+        date: parsed.date ?? null,
+        lineItems: Array.isArray(parsed.lineItems) ? parsed.lineItems : [],
+      };
+    } catch {
+      this.logger.warn('OpenAI receipt-parsing response was not valid JSON');
       return null;
     }
   }
