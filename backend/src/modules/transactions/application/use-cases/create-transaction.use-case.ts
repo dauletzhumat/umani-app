@@ -4,6 +4,7 @@ import { Transaction } from '../../domain/entities/transaction.entity';
 import { AccountRepository } from '../../../accounts/domain/repositories/account.repository';
 import { CategoryRepository } from '../../../categories/domain/repositories/category.repository';
 import { RecalculateAccountBalanceService } from '../../../accounts/application/services/recalculate-account-balance.service';
+import { CategorizationService } from '../../../ai/infrastructure/services/categorization.service';
 import { AppException } from '../../../../shared/exceptions/app.exception';
 import { CreateTransactionDto } from '../../infrastructure/dto/create-transaction.dto';
 
@@ -14,6 +15,7 @@ export class CreateTransactionUseCase {
     private readonly accountRepository: AccountRepository,
     private readonly categoryRepository: CategoryRepository,
     private readonly recalculateAccountBalanceService: RecalculateAccountBalanceService,
+    private readonly categorizationService: CategorizationService,
   ) {}
 
   async execute(
@@ -52,10 +54,23 @@ export class CreateTransactionUseCase {
       }
     }
 
+    // Auto-categorize only when the client didn't pick one and there's a
+    // note to categorize from — the schema has no dedicated "merchant"
+    // column, so note is the only textual signal available (T4.4).
+    let categoryId = dto.categoryId ?? null;
+    if (!categoryId && dto.note) {
+      categoryId = await this.categorizationService.categorize({
+        userId,
+        merchant: dto.note,
+        amount: dto.amount,
+        currency: dto.currency,
+      });
+    }
+
     const transaction = await this.transactionRepository.create({
       userId,
       accountId: dto.accountId,
-      categoryId: dto.categoryId ?? null,
+      categoryId,
       amount: dto.amount,
       currency: dto.currency,
       type: dto.type,
