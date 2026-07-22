@@ -22,4 +22,14 @@ export const envValidationSchema = Joi.object({
   // (CategorizationService degrades to "no category"), same shape as
   // OtpSenderService's "no provider chosen yet" stub from T1.2.
   OPENAI_API_KEY: Joi.string().allow('').default(''),
+
+  // Optional: no key configured means OCR scans return 503
+  // AI_PROVIDER_UNAVAILABLE instead of throwing (T4.5).
+  GOOGLE_VISION_API_KEY: Joi.string().allow('').default(''),
+
+  // Public Supabase Storage base URL, e.g. https://xyz.supabase.co —
+  // used to fetch the receipt image a client already uploaded via signed
+  // URL (docs/08_API.md §18). No Supabase project exists in this
+  // environment either; empty means "can't fetch" -> RECEIPT_UNREADABLE.
+  SUPABASE_URL: Joi.string().allow('').default(''),
 });

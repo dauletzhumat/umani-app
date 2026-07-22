@@ -8,6 +8,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { CategoriesModule } from './modules/categories/categories.module';
 import { AccountsModule } from './modules/accounts/accounts.module';
 import { TransactionsModule } from './modules/transactions/transactions.module';
+import { OcrModule } from './modules/ocr/ocr.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { TransactionsModule } from './modules/transactions/transactions.module';
     CategoriesModule,
     AccountsModule,
     TransactionsModule,
+    OcrModule,
   ],
   controllers: [HealthController],
   providers: [],

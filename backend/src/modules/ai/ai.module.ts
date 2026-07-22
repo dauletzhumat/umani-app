@@ -7,6 +7,6 @@ import { CategorizationService } from './infrastructure/services/categorization.
 @Module({
   imports: [RedisModule, CategoriesModule],
   providers: [OpenAiClientService, CategorizationService],
-  exports: [CategorizationService],
+  exports: [OpenAiClientService, CategorizationService],
 })
 export class AiModule {}
