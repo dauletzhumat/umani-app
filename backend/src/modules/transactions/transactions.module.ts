@@ -10,12 +10,14 @@ import { DeleteTransactionUseCase } from './application/use-cases/delete-transac
 import { TransactionsController } from './infrastructure/controllers/transactions.controller';
 import { AccountsModule } from '../accounts/accounts.module';
 import { CategoriesModule } from '../categories/categories.module';
+import { AiModule } from '../ai/ai.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Transaction]),
     AccountsModule,
     CategoriesModule,
+    AiModule,
   ],
   controllers: [TransactionsController],
   providers: [
