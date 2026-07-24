@@ -45,6 +45,67 @@ class TransactionRepositoryImpl implements TransactionRepository {
       throw ApiException.fromDioException(exception);
     }
   }
+
+  @override
+  Future<TransactionPage> fetchAll({
+    String? accountId,
+    String? categoryId,
+    TransactionType? type,
+    String? dateFrom,
+    String? dateTo,
+    String? cursor,
+  }) async {
+    try {
+      final response = await _dio.get<Map<String, dynamic>>(
+        '/transactions',
+        queryParameters: {
+          'accountId': ?accountId,
+          'categoryId': ?categoryId,
+          'type': ?(type == null ? null : transactionTypeToString(type)),
+          'dateFrom': ?dateFrom,
+          'dateTo': ?dateTo,
+          'cursor': ?cursor,
+        },
+      );
+      final body = response.data!;
+      final items =
+          (body['data'] as List<dynamic>)
+              .map((json) => Transaction.fromJson(json as Map<String, dynamic>))
+              .toList();
+      final meta = body['meta'] as Map<String, dynamic>;
+      return TransactionPage(
+        items: items,
+        nextCursor: meta['nextCursor'] as String?,
+        hasMore: meta['hasMore'] as bool,
+      );
+    } on DioException catch (exception) {
+      throw ApiException.fromDioException(exception);
+    }
+  }
+
+  @override
+  Future<Transaction> update(String id, {String? categoryId}) async {
+    try {
+      final response = await _dio.patch<Map<String, dynamic>>(
+        '/transactions/$id',
+        data: {'categoryId': ?categoryId},
+      );
+      return Transaction.fromJson(
+        response.data!['data'] as Map<String, dynamic>,
+      );
+    } on DioException catch (exception) {
+      throw ApiException.fromDioException(exception);
+    }
+  }
+
+  @override
+  Future<void> delete(String id) async {
+    try {
+      await _dio.delete<void>('/transactions/$id');
+    } on DioException catch (exception) {
+      throw ApiException.fromDioException(exception);
+    }
+  }
 }
 
 final transactionRepositoryProvider = Provider<TransactionRepository>((ref) {
