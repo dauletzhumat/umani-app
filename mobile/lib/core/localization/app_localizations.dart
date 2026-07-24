@@ -138,6 +138,9 @@ class AppLocalizations {
       'transactionListDeleteConfirmButton': 'Удалить',
       'transactionListDeleteCancelButton': 'Отмена',
       'transactionTileNoCategory': 'Без категории',
+      'budgetListTitle': 'Бюджеты',
+      'budgetListEmptyMessage': 'Пока нет бюджетов',
+      'budgetCardProgressTemplate': '{a} из {b}',
     },
     'kk': {
       'appName': 'AI Finance',
@@ -250,6 +253,9 @@ class AppLocalizations {
       'transactionListDeleteConfirmButton': 'Жою',
       'transactionListDeleteCancelButton': 'Бас тарту',
       'transactionTileNoCategory': 'Санатсыз',
+      'budgetListTitle': 'Бюджеттер',
+      'budgetListEmptyMessage': 'Әзірге бюджеттер жоқ',
+      'budgetCardProgressTemplate': '{b} ішінен {a}',
     },
     'en': {
       'appName': 'AI Finance',
@@ -364,6 +370,9 @@ class AppLocalizations {
       'transactionListDeleteConfirmButton': 'Delete',
       'transactionListDeleteCancelButton': 'Cancel',
       'transactionTileNoCategory': 'No category',
+      'budgetListTitle': 'Budgets',
+      'budgetListEmptyMessage': 'No budgets yet',
+      'budgetCardProgressTemplate': '{a} of {b}',
     },
   };
 
@@ -372,6 +381,9 @@ class AppLocalizations {
 
   String _template(String key, String value) =>
       _string(key).replaceAll('{value}', value);
+
+  String _template2(String key, {required String a, required String b}) =>
+      _string(key).replaceAll('{a}', a).replaceAll('{b}', b);
 
   String get appName => _string('appName');
   String get languageScreenTitle => _string('languageScreenTitle');
@@ -507,6 +519,10 @@ class AppLocalizations {
   String get transactionListDeleteCancelButton =>
       _string('transactionListDeleteCancelButton');
   String get transactionTileNoCategory => _string('transactionTileNoCategory');
+  String get budgetListTitle => _string('budgetListTitle');
+  String get budgetListEmptyMessage => _string('budgetListEmptyMessage');
+  String budgetCardProgress(String spentAmount, String amountLimit) =>
+      _template2('budgetCardProgressTemplate', a: spentAmount, b: amountLimit);
 
   /// Maps a backend error `code` (docs/08_API.md §5) to localized text,
   /// falling back to the raw message the server sent for anything not
