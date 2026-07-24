@@ -12,4 +12,15 @@ export abstract class InstallmentPaymentRepository {
   abstract findAllForInstallments(
     installmentIds: string[],
   ): Promise<InstallmentPayment[]>;
+
+  abstract findById(id: string): Promise<InstallmentPayment | null>;
+
+  abstract markPaid(id: string): Promise<InstallmentPayment>;
+
+  /** pending payments due within [dateFrom, dateTo] inclusive —
+   * InstallmentReminderJob's (T7.3) 1-3-day-ahead window. */
+  abstract findPendingDueBetween(
+    dateFrom: string,
+    dateTo: string,
+  ): Promise<InstallmentPayment[]>;
 }

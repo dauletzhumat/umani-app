@@ -12,4 +12,10 @@ export abstract class InstallmentRepository {
 
   /** Non-soft-deleted installments owned by the user. */
   abstract findAllForUser(userId: string): Promise<Installment[]>;
+
+  abstract findById(id: string): Promise<Installment | null>;
+
+  /** Batch lookup — InstallmentReminderJob (T7.3) resolves userId/merchant
+   * for a set of due payments without an N+1 query per payment. */
+  abstract findByIds(ids: string[]): Promise<Installment[]>;
 }
