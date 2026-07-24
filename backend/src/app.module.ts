@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 import { envValidationSchema } from './config/env-validation.schema';
 import { HealthController } from './modules/health/health.controller';
 import { UsersModule } from './modules/users/users.module';
@@ -18,6 +19,10 @@ import { BudgetsModule } from './modules/budgets/budgets.module';
       isGlobal: true,
       validationSchema: envValidationSchema,
     }),
+    // Powers TransactionCreatedEvent -> BudgetThresholdListener (T6.2) —
+    // an in-process pub/sub, not a durable queue; fine for MVP scope
+    // since the listener runs synchronously within the same request.
+    EventEmitterModule.forRoot(),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({

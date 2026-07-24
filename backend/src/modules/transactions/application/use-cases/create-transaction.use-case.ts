@@ -1,6 +1,11 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { TransactionRepository } from '../../domain/repositories/transaction.repository';
 import { Transaction } from '../../domain/entities/transaction.entity';
+import {
+  TRANSACTION_CREATED_EVENT,
+  TransactionCreatedEvent,
+} from '../../domain/events/transaction-created.event';
 import { AccountRepository } from '../../../accounts/domain/repositories/account.repository';
 import { CategoryRepository } from '../../../categories/domain/repositories/category.repository';
 import { RecalculateAccountBalanceService } from '../../../accounts/application/services/recalculate-account-balance.service';
@@ -16,6 +21,7 @@ export class CreateTransactionUseCase {
     private readonly categoryRepository: CategoryRepository,
     private readonly recalculateAccountBalanceService: RecalculateAccountBalanceService,
     private readonly categorizationService: CategorizationService,
+    private readonly eventEmitter: EventEmitter2,
   ) {}
 
   async execute(
@@ -80,6 +86,22 @@ export class CreateTransactionUseCase {
     });
 
     await this.recalculateAccountBalanceService.recalculate(dto.accountId);
+
+    // emitAsync (not emit) so the response only returns once
+    // BudgetThresholdListener (T6.2) has finished — makes the budget
+    // notification reliably exist by the time the client sees 201,
+    // rather than racing a fire-and-forget background listener. The
+    // listener itself catches its own errors, so this can't turn a
+    // notification failure into a failed transaction creation.
+    await this.eventEmitter.emitAsync(
+      TRANSACTION_CREATED_EVENT,
+      new TransactionCreatedEvent(
+        userId,
+        transaction.categoryId,
+        transaction.type,
+        transaction.occurredAt,
+      ),
+    );
 
     return transaction;
   }

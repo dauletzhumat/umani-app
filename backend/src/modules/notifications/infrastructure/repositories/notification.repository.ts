@@ -64,6 +64,22 @@ export class TypeOrmNotificationRepository implements NotificationRepository {
     return { items: hasMore ? rows.slice(0, limit) : rows, hasMore };
   }
 
+  async existsByTypeAndPayload(
+    userId: string,
+    type: string,
+    payloadMatch: Record<string, unknown>,
+  ): Promise<boolean> {
+    const count = await this.repository
+      .createQueryBuilder('notification')
+      .where('notification.userId = :userId', { userId })
+      .andWhere('notification.type = :type', { type })
+      .andWhere('notification.payload @> :payloadMatch', {
+        payloadMatch: JSON.stringify(payloadMatch),
+      })
+      .getCount();
+    return count > 0;
+  }
+
   async markRead(id: string): Promise<Notification> {
     await this.repository.update({ id }, { readAt: new Date() });
     const updated = await this.repository.findOne({ where: { id } });

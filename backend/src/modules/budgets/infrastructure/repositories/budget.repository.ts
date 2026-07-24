@@ -21,6 +21,15 @@ export class TypeOrmBudgetRepository implements BudgetRepository {
     return this.repository.findOne({ where: { id, deletedAt: IsNull() } });
   }
 
+  findAllForUserAndCategory(
+    userId: string,
+    categoryId: string,
+  ): Promise<Budget[]> {
+    return this.repository.find({
+      where: { userId, categoryId, deletedAt: IsNull() },
+    });
+  }
+
   findByUserCategoryPeriodAndStart(
     userId: string,
     categoryId: string,

@@ -6,6 +6,14 @@ export abstract class BudgetRepository {
 
   abstract findById(id: string): Promise<Budget | null>;
 
+  /** Non-soft-deleted budgets for a category — BudgetThresholdListener
+   * (T6.2) narrows a transaction's category down to the (usually one)
+   * budget whose period window contains it. */
+  abstract findAllForUserAndCategory(
+    userId: string,
+    categoryId: string,
+  ): Promise<Budget[]>;
+
   /** Used for the uq_budgets_user_category_period pre-check (a friendlier
    * 409 CONFLICT message than surfacing the raw DB constraint error). */
   abstract findByUserCategoryPeriodAndStart(

@@ -24,4 +24,12 @@ export abstract class NotificationRepository {
   ): Promise<{ items: Notification[]; hasMore: boolean }>;
 
   abstract markRead(id: string): Promise<Notification>;
+
+  /** JSONB containment check — e.g. BudgetThresholdListener (T6.2) uses
+   * this to dedupe {budgetId, threshold} before creating another one. */
+  abstract existsByTypeAndPayload(
+    userId: string,
+    type: string,
+    payloadMatch: Record<string, unknown>,
+  ): Promise<boolean>;
 }

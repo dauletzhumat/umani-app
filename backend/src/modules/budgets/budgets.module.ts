@@ -9,7 +9,10 @@ import { GetBudgetsUseCase } from './application/use-cases/get-budgets.use-case'
 import { UpdateBudgetUseCase } from './application/use-cases/update-budget.use-case';
 import { DeleteBudgetUseCase } from './application/use-cases/delete-budget.use-case';
 import { BudgetsController } from './infrastructure/controllers/budgets.controller';
+import { BudgetThresholdListener } from './application/listeners/budget-threshold.listener';
 import { CategoriesModule } from '../categories/categories.module';
+import { UsersModule } from '../users/users.module';
+import { NotificationsModule } from '../notifications/notifications.module';
 import { Transaction } from '../transactions/domain/entities/transaction.entity';
 import { TransactionRepository } from '../transactions/domain/repositories/transaction.repository';
 import { TypeOrmTransactionRepository } from '../transactions/infrastructure/repositories/transaction.repository';
@@ -18,8 +21,16 @@ import { TypeOrmTransactionRepository } from '../transactions/infrastructure/rep
   // Transaction/TransactionRepository bound here too (alongside
   // TransactionsModule's own identical binding), same DI shape as
   // AccountsModule — BudgetProgressService needs read access to sum
-  // expenses without a circular module import.
-  imports: [TypeOrmModule.forFeature([Budget, Transaction]), CategoriesModule],
+  // expenses without a circular module import. NotificationsModule
+  // gives BudgetThresholdListener NotificationDispatcherService +
+  // NotificationRepository (T6.2); UsersModule gives it the user's
+  // locale for the push text.
+  imports: [
+    TypeOrmModule.forFeature([Budget, Transaction]),
+    CategoriesModule,
+    UsersModule,
+    NotificationsModule,
+  ],
   controllers: [BudgetsController],
   providers: [
     { provide: BudgetRepository, useClass: TypeOrmBudgetRepository },
@@ -29,6 +40,7 @@ import { TypeOrmTransactionRepository } from '../transactions/infrastructure/rep
     GetBudgetsUseCase,
     UpdateBudgetUseCase,
     DeleteBudgetUseCase,
+    BudgetThresholdListener,
   ],
   exports: [BudgetRepository],
 })
