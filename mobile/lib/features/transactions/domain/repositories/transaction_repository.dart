@@ -11,5 +11,6 @@ abstract class TransactionRepository {
     required TransactionType type,
     String? occurredAt,
     String? note,
+    String? source,
   });
 }
