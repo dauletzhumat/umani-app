@@ -32,4 +32,10 @@ export const envValidationSchema = Joi.object({
   // URL (docs/08_API.md §18). No Supabase project exists in this
   // environment either; empty means "can't fetch" -> RECEIPT_UNREADABLE.
   SUPABASE_URL: Joi.string().allow('').default(''),
+
+  // Optional: service-account JSON for Firebase Cloud Messaging (T5.1).
+  // Empty means FcmService.send() no-ops — the notification row is still
+  // created, only the push delivery is skipped. No Firebase project
+  // exists in this environment either.
+  FIREBASE_SERVICE_ACCOUNT_JSON: Joi.string().allow('').default(''),
 });
