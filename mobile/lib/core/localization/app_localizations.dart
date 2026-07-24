@@ -98,6 +98,10 @@ class AppLocalizations {
       'addAccountTypeBank': 'Банк',
       'addAccountTypeCard': 'Карта',
       'addAccountSaveButton': 'Сохранить',
+      'addTransactionSheetTitle': 'Добавить транзакцию',
+      'addTransactionManual': 'Вручную',
+      'addTransactionPhoto': 'Фото чека',
+      'addTransactionTemplate': 'Из шаблона',
     },
     'kk': {
       'appName': 'AI Finance',
@@ -171,6 +175,10 @@ class AppLocalizations {
       'addAccountTypeBank': 'Банк',
       'addAccountTypeCard': 'Карта',
       'addAccountSaveButton': 'Сақтау',
+      'addTransactionSheetTitle': 'Транзакция қосу',
+      'addTransactionManual': 'Қолмен',
+      'addTransactionPhoto': 'Чек фотосы',
+      'addTransactionTemplate': 'Үлгіден',
     },
     'en': {
       'appName': 'AI Finance',
@@ -245,6 +253,10 @@ class AppLocalizations {
       'addAccountTypeBank': 'Bank',
       'addAccountTypeCard': 'Card',
       'addAccountSaveButton': 'Save',
+      'addTransactionSheetTitle': 'Add transaction',
+      'addTransactionManual': 'Manually',
+      'addTransactionPhoto': 'Photo of receipt',
+      'addTransactionTemplate': 'From template',
     },
   };
 
@@ -332,6 +344,11 @@ class AppLocalizations {
   String get addAccountTypeBank => _string('addAccountTypeBank');
   String get addAccountTypeCard => _string('addAccountTypeCard');
   String get addAccountSaveButton => _string('addAccountSaveButton');
+
+  String get addTransactionSheetTitle => _string('addTransactionSheetTitle');
+  String get addTransactionManual => _string('addTransactionManual');
+  String get addTransactionPhoto => _string('addTransactionPhoto');
+  String get addTransactionTemplate => _string('addTransactionTemplate');
 
   /// Maps a backend error `code` (docs/08_API.md §5) to localized text,
   /// falling back to the raw message the server sent for anything not
