@@ -10,6 +10,7 @@ import { AccountsModule } from './modules/accounts/accounts.module';
 import { TransactionsModule } from './modules/transactions/transactions.module';
 import { OcrModule } from './modules/ocr/ocr.module';
 import { NotificationsModule } from './modules/notifications/notifications.module';
+import { BudgetsModule } from './modules/budgets/budgets.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { NotificationsModule } from './modules/notifications/notifications.modul
     TransactionsModule,
     OcrModule,
     NotificationsModule,
+    BudgetsModule,
   ],
   controllers: [HealthController],
   providers: [],

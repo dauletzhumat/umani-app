@@ -34,6 +34,15 @@ export abstract class TransactionRepository {
    * from transaction history, never trusted from the client). */
   abstract sumForAccount(accountId: string): Promise<string>;
 
+  /** Sum of expense transactions for a category within [dateFrom, dateTo)
+   * — the spentAmount behind a budget's progress (T6.1). */
+  abstract sumExpenseForCategoryInRange(
+    userId: string,
+    categoryId: string,
+    dateFrom: string,
+    dateTo: string,
+  ): Promise<string>;
+
   abstract create(data: {
     userId: string;
     accountId: string;
