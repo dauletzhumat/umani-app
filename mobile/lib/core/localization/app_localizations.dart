@@ -102,6 +102,17 @@ class AppLocalizations {
       'addTransactionManual': 'Вручную',
       'addTransactionPhoto': 'Фото чека',
       'addTransactionTemplate': 'Из шаблона',
+      'manualEntryTitle': 'Новая транзакция',
+      'manualEntryTypeIncome': 'Доход',
+      'manualEntryTypeExpense': 'Расход',
+      'manualEntryAmountLabel': 'Сумма',
+      'manualEntryCategoryLabel': 'Категория',
+      'manualEntryCategoryPlaceholder': 'Выбрать категорию',
+      'manualEntryAccountLabel': 'Счёт',
+      'manualEntryDateLabel': 'Дата',
+      'manualEntryNoteLabel': 'Заметка',
+      'manualEntrySaveButton': 'Сохранить',
+      'transactionSavedToast': 'Транзакция сохранена',
     },
     'kk': {
       'appName': 'AI Finance',
@@ -179,6 +190,17 @@ class AppLocalizations {
       'addTransactionManual': 'Қолмен',
       'addTransactionPhoto': 'Чек фотосы',
       'addTransactionTemplate': 'Үлгіден',
+      'manualEntryTitle': 'Жаңа транзакция',
+      'manualEntryTypeIncome': 'Кіріс',
+      'manualEntryTypeExpense': 'Шығыс',
+      'manualEntryAmountLabel': 'Сома',
+      'manualEntryCategoryLabel': 'Санат',
+      'manualEntryCategoryPlaceholder': 'Санатты таңдау',
+      'manualEntryAccountLabel': 'Шот',
+      'manualEntryDateLabel': 'Күні',
+      'manualEntryNoteLabel': 'Ескертпе',
+      'manualEntrySaveButton': 'Сақтау',
+      'transactionSavedToast': 'Транзакция сақталды',
     },
     'en': {
       'appName': 'AI Finance',
@@ -257,6 +279,17 @@ class AppLocalizations {
       'addTransactionManual': 'Manually',
       'addTransactionPhoto': 'Photo of receipt',
       'addTransactionTemplate': 'From template',
+      'manualEntryTitle': 'New transaction',
+      'manualEntryTypeIncome': 'Income',
+      'manualEntryTypeExpense': 'Expense',
+      'manualEntryAmountLabel': 'Amount',
+      'manualEntryCategoryLabel': 'Category',
+      'manualEntryCategoryPlaceholder': 'Choose a category',
+      'manualEntryAccountLabel': 'Account',
+      'manualEntryDateLabel': 'Date',
+      'manualEntryNoteLabel': 'Note',
+      'manualEntrySaveButton': 'Save',
+      'transactionSavedToast': 'Transaction saved',
     },
   };
 
@@ -349,6 +382,19 @@ class AppLocalizations {
   String get addTransactionManual => _string('addTransactionManual');
   String get addTransactionPhoto => _string('addTransactionPhoto');
   String get addTransactionTemplate => _string('addTransactionTemplate');
+
+  String get manualEntryTitle => _string('manualEntryTitle');
+  String get manualEntryTypeIncome => _string('manualEntryTypeIncome');
+  String get manualEntryTypeExpense => _string('manualEntryTypeExpense');
+  String get manualEntryAmountLabel => _string('manualEntryAmountLabel');
+  String get manualEntryCategoryLabel => _string('manualEntryCategoryLabel');
+  String get manualEntryCategoryPlaceholder =>
+      _string('manualEntryCategoryPlaceholder');
+  String get manualEntryAccountLabel => _string('manualEntryAccountLabel');
+  String get manualEntryDateLabel => _string('manualEntryDateLabel');
+  String get manualEntryNoteLabel => _string('manualEntryNoteLabel');
+  String get manualEntrySaveButton => _string('manualEntrySaveButton');
+  String get transactionSavedToast => _string('transactionSavedToast');
 
   /// Maps a backend error `code` (docs/08_API.md §5) to localized text,
   /// falling back to the raw message the server sent for anything not
