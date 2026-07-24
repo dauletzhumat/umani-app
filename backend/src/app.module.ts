@@ -12,6 +12,7 @@ import { TransactionsModule } from './modules/transactions/transactions.module';
 import { OcrModule } from './modules/ocr/ocr.module';
 import { NotificationsModule } from './modules/notifications/notifications.module';
 import { BudgetsModule } from './modules/budgets/budgets.module';
+import { InstallmentsModule } from './modules/installments/installments.module';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { BudgetsModule } from './modules/budgets/budgets.module';
     OcrModule,
     NotificationsModule,
     BudgetsModule,
+    InstallmentsModule,
   ],
   controllers: [HealthController],
   providers: [],
