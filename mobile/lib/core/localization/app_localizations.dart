@@ -141,6 +141,12 @@ class AppLocalizations {
       'budgetListTitle': 'Бюджеты',
       'budgetListEmptyMessage': 'Пока нет бюджетов',
       'budgetCardProgressTemplate': '{a} из {b}',
+      'createBudgetSheetTitle': 'Новый бюджет',
+      'createBudgetCategoryLabel': 'Категория',
+      'createBudgetCategoryPlaceholder': 'Выберите категорию',
+      'createBudgetLimitLabel': 'Лимит',
+      'createBudgetSaveButton': 'Сохранить',
+      'budgetCreatedToast': 'Бюджет создан',
     },
     'kk': {
       'appName': 'AI Finance',
@@ -256,6 +262,12 @@ class AppLocalizations {
       'budgetListTitle': 'Бюджеттер',
       'budgetListEmptyMessage': 'Әзірге бюджеттер жоқ',
       'budgetCardProgressTemplate': '{b} ішінен {a}',
+      'createBudgetSheetTitle': 'Жаңа бюджет',
+      'createBudgetCategoryLabel': 'Санат',
+      'createBudgetCategoryPlaceholder': 'Санатты таңдаңыз',
+      'createBudgetLimitLabel': 'Лимит',
+      'createBudgetSaveButton': 'Сақтау',
+      'budgetCreatedToast': 'Бюджет жасалды',
     },
     'en': {
       'appName': 'AI Finance',
@@ -373,6 +385,12 @@ class AppLocalizations {
       'budgetListTitle': 'Budgets',
       'budgetListEmptyMessage': 'No budgets yet',
       'budgetCardProgressTemplate': '{a} of {b}',
+      'createBudgetSheetTitle': 'New budget',
+      'createBudgetCategoryLabel': 'Category',
+      'createBudgetCategoryPlaceholder': 'Choose a category',
+      'createBudgetLimitLabel': 'Limit',
+      'createBudgetSaveButton': 'Save',
+      'budgetCreatedToast': 'Budget created',
     },
   };
 
@@ -523,6 +541,13 @@ class AppLocalizations {
   String get budgetListEmptyMessage => _string('budgetListEmptyMessage');
   String budgetCardProgress(String spentAmount, String amountLimit) =>
       _template2('budgetCardProgressTemplate', a: spentAmount, b: amountLimit);
+  String get createBudgetSheetTitle => _string('createBudgetSheetTitle');
+  String get createBudgetCategoryLabel => _string('createBudgetCategoryLabel');
+  String get createBudgetCategoryPlaceholder =>
+      _string('createBudgetCategoryPlaceholder');
+  String get createBudgetLimitLabel => _string('createBudgetLimitLabel');
+  String get createBudgetSaveButton => _string('createBudgetSaveButton');
+  String get budgetCreatedToast => _string('budgetCreatedToast');
 
   /// Maps a backend error `code` (docs/08_API.md §5) to localized text,
   /// falling back to the raw message the server sent for anything not

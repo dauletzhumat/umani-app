@@ -25,6 +25,29 @@ class BudgetRepositoryImpl implements BudgetRepository {
       throw ApiException.fromDioException(exception);
     }
   }
+
+  @override
+  Future<Budget> create({
+    required String categoryId,
+    required String amountLimit,
+    required BudgetPeriod period,
+    required String startDate,
+  }) async {
+    try {
+      final response = await _dio.post<Map<String, dynamic>>(
+        '/budgets',
+        data: {
+          'categoryId': categoryId,
+          'amountLimit': amountLimit,
+          'period': budgetPeriodToString(period),
+          'startDate': startDate,
+        },
+      );
+      return Budget.fromJson(response.data!['data'] as Map<String, dynamic>);
+    } on DioException catch (exception) {
+      throw ApiException.fromDioException(exception);
+    }
+  }
 }
 
 final budgetRepositoryProvider = Provider<BudgetRepository>((ref) {
