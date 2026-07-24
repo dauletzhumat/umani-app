@@ -9,6 +9,13 @@
 # packages, and plugins designed to encourage good coding practices.
 include: package:flutter_lints/flutter.yaml
 
+# iOS Swift Package Manager checks out full package sources (including
+# their own test/ dirs) under build/ios/SourcePackages — Flutter's SPM
+# integration for firebase_* packages (T5.2). These aren't ours to lint.
+analyzer:
+  exclude:
+    - build/**
+
 linter:
   # The lint rules applied to this project can be customized in the
   # section below to disable rules from the `package:flutter_lints/flutter.yaml`
