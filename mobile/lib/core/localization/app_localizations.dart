@@ -128,6 +128,16 @@ class AppLocalizations {
           'Не удалось распознать чек. Попробуйте ещё раз или введите вручную.',
       'errorAiProviderUnavailable':
           'Сервис распознавания временно недоступен',
+      'transactionListTitle': 'Операции',
+      'transactionListEmptyMessage': 'Пока нет транзакций',
+      'transactionListFilterAllAccounts': 'Все счета',
+      'transactionListFilterAllCategories': 'Все категории',
+      'transactionListFilterPeriodLabel': 'Период',
+      'transactionListDeleteConfirmTitle': 'Удалить транзакцию?',
+      'transactionListDeleteConfirmMessage': 'Это действие нельзя отменить',
+      'transactionListDeleteConfirmButton': 'Удалить',
+      'transactionListDeleteCancelButton': 'Отмена',
+      'transactionTileNoCategory': 'Без категории',
     },
     'kk': {
       'appName': 'AI Finance',
@@ -230,6 +240,16 @@ class AppLocalizations {
       'errorReceiptUnreadable':
           'Чекті тану мүмкін болмады. Қайталап көріңіз немесе қолмен енгізіңіз.',
       'errorAiProviderUnavailable': 'Тану қызметі уақытша қолжетімсіз',
+      'transactionListTitle': 'Операциялар',
+      'transactionListEmptyMessage': 'Әзірге транзакциялар жоқ',
+      'transactionListFilterAllAccounts': 'Барлық шоттар',
+      'transactionListFilterAllCategories': 'Барлық санаттар',
+      'transactionListFilterPeriodLabel': 'Кезең',
+      'transactionListDeleteConfirmTitle': 'Транзакцияны жою керек пе?',
+      'transactionListDeleteConfirmMessage': 'Бұл әрекетті болдырмау мүмкін емес',
+      'transactionListDeleteConfirmButton': 'Жою',
+      'transactionListDeleteCancelButton': 'Бас тарту',
+      'transactionTileNoCategory': 'Санатсыз',
     },
     'en': {
       'appName': 'AI Finance',
@@ -334,6 +354,16 @@ class AppLocalizations {
           "Couldn't read the receipt. Try again or enter it manually.",
       'errorAiProviderUnavailable':
           'Recognition service is temporarily unavailable',
+      'transactionListTitle': 'Transactions',
+      'transactionListEmptyMessage': 'No transactions yet',
+      'transactionListFilterAllAccounts': 'All accounts',
+      'transactionListFilterAllCategories': 'All categories',
+      'transactionListFilterPeriodLabel': 'Period',
+      'transactionListDeleteConfirmTitle': 'Delete transaction?',
+      'transactionListDeleteConfirmMessage': 'This action cannot be undone',
+      'transactionListDeleteConfirmButton': 'Delete',
+      'transactionListDeleteCancelButton': 'Cancel',
+      'transactionTileNoCategory': 'No category',
     },
   };
 
@@ -459,6 +489,24 @@ class AppLocalizations {
   String get errorReceiptUnreadable => _string('errorReceiptUnreadable');
   String get errorAiProviderUnavailable =>
       _string('errorAiProviderUnavailable');
+  String get transactionListTitle => _string('transactionListTitle');
+  String get transactionListEmptyMessage =>
+      _string('transactionListEmptyMessage');
+  String get transactionListFilterAllAccounts =>
+      _string('transactionListFilterAllAccounts');
+  String get transactionListFilterAllCategories =>
+      _string('transactionListFilterAllCategories');
+  String get transactionListFilterPeriodLabel =>
+      _string('transactionListFilterPeriodLabel');
+  String get transactionListDeleteConfirmTitle =>
+      _string('transactionListDeleteConfirmTitle');
+  String get transactionListDeleteConfirmMessage =>
+      _string('transactionListDeleteConfirmMessage');
+  String get transactionListDeleteConfirmButton =>
+      _string('transactionListDeleteConfirmButton');
+  String get transactionListDeleteCancelButton =>
+      _string('transactionListDeleteCancelButton');
+  String get transactionTileNoCategory => _string('transactionTileNoCategory');
 
   /// Maps a backend error `code` (docs/08_API.md §5) to localized text,
   /// falling back to the raw message the server sent for anything not

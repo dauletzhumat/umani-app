@@ -67,6 +67,28 @@ class _FakeTransactionRepository implements TransactionRepository {
       note: note,
     );
   }
+
+  @override
+  Future<TransactionPage> fetchAll({
+    String? accountId,
+    String? categoryId,
+    TransactionType? type,
+    String? dateFrom,
+    String? dateTo,
+    String? cursor,
+  }) async {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Transaction> update(String id, {String? categoryId}) async {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> delete(String id) async {
+    throw UnimplementedError();
+  }
 }
 
 void main() {
