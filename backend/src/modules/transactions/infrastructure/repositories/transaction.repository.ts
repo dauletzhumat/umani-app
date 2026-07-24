@@ -78,6 +78,23 @@ export class TypeOrmTransactionRepository implements TransactionRepository {
     return this.repository.findOne({ where: { id, deletedAt: IsNull() } });
   }
 
+  async sumExpenseForCategoryInRange(
+    userId: string,
+    categoryId: string,
+    dateFrom: string,
+    dateTo: string,
+  ): Promise<string> {
+    const rows: Array<{ spent: string }> = await this.repository.query(
+      `SELECT COALESCE(SUM(amount), 0) AS spent
+       FROM transactions
+       WHERE user_id = $1 AND category_id = $2 AND type = 'expense'
+         AND occurred_at >= $3 AND occurred_at < $4
+         AND deleted_at IS NULL`,
+      [userId, categoryId, dateFrom, dateTo],
+    );
+    return rows[0]?.spent ?? '0';
+  }
+
   async sumForAccount(accountId: string): Promise<string> {
     // Raw SQL against known column names, rather than the query builder's
     // alias.property substitution, to keep a CASE expression unambiguous.
