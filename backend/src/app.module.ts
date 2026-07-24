@@ -9,6 +9,7 @@ import { CategoriesModule } from './modules/categories/categories.module';
 import { AccountsModule } from './modules/accounts/accounts.module';
 import { TransactionsModule } from './modules/transactions/transactions.module';
 import { OcrModule } from './modules/ocr/ocr.module';
+import { NotificationsModule } from './modules/notifications/notifications.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { OcrModule } from './modules/ocr/ocr.module';
     AccountsModule,
     TransactionsModule,
     OcrModule,
+    NotificationsModule,
   ],
   controllers: [HealthController],
   providers: [],
