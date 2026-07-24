@@ -22,6 +22,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
     required TransactionType type,
     String? occurredAt,
     String? note,
+    String? source,
   }) async {
     try {
       final response = await _dio.post<Map<String, dynamic>>(
@@ -34,6 +35,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
           'type': transactionTypeToString(type),
           'occurredAt': ?occurredAt,
           'note': ?note,
+          'source': ?source,
         },
       );
       return Transaction.fromJson(

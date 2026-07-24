@@ -113,6 +113,21 @@ class AppLocalizations {
       'manualEntryNoteLabel': 'Заметка',
       'manualEntrySaveButton': 'Сохранить',
       'transactionSavedToast': 'Транзакция сохранена',
+      'receiptScanTitle': 'Сканирование чека',
+      'receiptScanInstruction': 'Наведите камеру на чек и снимите фото',
+      'receiptScanCaptureButton': 'Снять фото',
+      'receiptScanPermissionDeniedMessage':
+          'Нет доступа к камере. Вы можете ввести транзакцию вручную.',
+      'receiptScanManualEntryFallback': 'Ввести вручную',
+      'receiptPreviewTitle': 'Проверьте данные',
+      'receiptPreviewLineItemsLabel': 'Позиции',
+      'receiptPreviewLineItemNameLabel': 'Название',
+      'receiptPreviewLineItemPriceLabel': 'Цена',
+      'receiptPreviewConfirmButton': 'Подтвердить',
+      'errorReceiptUnreadable':
+          'Не удалось распознать чек. Попробуйте ещё раз или введите вручную.',
+      'errorAiProviderUnavailable':
+          'Сервис распознавания временно недоступен',
     },
     'kk': {
       'appName': 'AI Finance',
@@ -201,6 +216,20 @@ class AppLocalizations {
       'manualEntryNoteLabel': 'Ескертпе',
       'manualEntrySaveButton': 'Сақтау',
       'transactionSavedToast': 'Транзакция сақталды',
+      'receiptScanTitle': 'Чекті сканерлеу',
+      'receiptScanInstruction': 'Камераны чекке бағыттап, фотоға түсіріңіз',
+      'receiptScanCaptureButton': 'Фотоға түсіру',
+      'receiptScanPermissionDeniedMessage':
+          'Камераға қол жеткізу жоқ. Транзакцияны қолмен енгізе аласыз.',
+      'receiptScanManualEntryFallback': 'Қолмен енгізу',
+      'receiptPreviewTitle': 'Деректерді тексеріңіз',
+      'receiptPreviewLineItemsLabel': 'Позициялар',
+      'receiptPreviewLineItemNameLabel': 'Атауы',
+      'receiptPreviewLineItemPriceLabel': 'Бағасы',
+      'receiptPreviewConfirmButton': 'Растау',
+      'errorReceiptUnreadable':
+          'Чекті тану мүмкін болмады. Қайталап көріңіз немесе қолмен енгізіңіз.',
+      'errorAiProviderUnavailable': 'Тану қызметі уақытша қолжетімсіз',
     },
     'en': {
       'appName': 'AI Finance',
@@ -290,6 +319,21 @@ class AppLocalizations {
       'manualEntryNoteLabel': 'Note',
       'manualEntrySaveButton': 'Save',
       'transactionSavedToast': 'Transaction saved',
+      'receiptScanTitle': 'Scan receipt',
+      'receiptScanInstruction': 'Point the camera at the receipt and take a photo',
+      'receiptScanCaptureButton': 'Take photo',
+      'receiptScanPermissionDeniedMessage':
+          'No camera access. You can enter the transaction manually instead.',
+      'receiptScanManualEntryFallback': 'Enter manually',
+      'receiptPreviewTitle': 'Review the details',
+      'receiptPreviewLineItemsLabel': 'Line items',
+      'receiptPreviewLineItemNameLabel': 'Name',
+      'receiptPreviewLineItemPriceLabel': 'Price',
+      'receiptPreviewConfirmButton': 'Confirm',
+      'errorReceiptUnreadable':
+          "Couldn't read the receipt. Try again or enter it manually.",
+      'errorAiProviderUnavailable':
+          'Recognition service is temporarily unavailable',
     },
   };
 
@@ -396,10 +440,29 @@ class AppLocalizations {
   String get manualEntrySaveButton => _string('manualEntrySaveButton');
   String get transactionSavedToast => _string('transactionSavedToast');
 
+  String get receiptScanTitle => _string('receiptScanTitle');
+  String get receiptScanInstruction => _string('receiptScanInstruction');
+  String get receiptScanCaptureButton => _string('receiptScanCaptureButton');
+  String get receiptScanPermissionDeniedMessage =>
+      _string('receiptScanPermissionDeniedMessage');
+  String get receiptScanManualEntryFallback =>
+      _string('receiptScanManualEntryFallback');
+  String get receiptPreviewTitle => _string('receiptPreviewTitle');
+  String get receiptPreviewLineItemsLabel =>
+      _string('receiptPreviewLineItemsLabel');
+  String get receiptPreviewLineItemNameLabel =>
+      _string('receiptPreviewLineItemNameLabel');
+  String get receiptPreviewLineItemPriceLabel =>
+      _string('receiptPreviewLineItemPriceLabel');
+  String get receiptPreviewConfirmButton =>
+      _string('receiptPreviewConfirmButton');
+  String get errorReceiptUnreadable => _string('errorReceiptUnreadable');
+  String get errorAiProviderUnavailable =>
+      _string('errorAiProviderUnavailable');
+
   /// Maps a backend error `code` (docs/08_API.md §5) to localized text,
   /// falling back to the raw message the server sent for anything not
-  /// mapped here (only OTP/register/login codes are covered — that's all
-  /// this screen set can produce).
+  /// mapped here.
   String errorMessageForCode(String code, String fallback) {
     switch (code) {
       case 'OTP_INVALID':
@@ -416,6 +479,10 @@ class AppLocalizations {
         return errorValidation;
       case 'NETWORK_ERROR':
         return errorNetwork;
+      case 'RECEIPT_UNREADABLE':
+        return errorReceiptUnreadable;
+      case 'AI_PROVIDER_UNAVAILABLE':
+        return errorAiProviderUnavailable;
       default:
         return fallback;
     }
