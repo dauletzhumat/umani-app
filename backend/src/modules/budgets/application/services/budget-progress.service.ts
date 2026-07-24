@@ -67,6 +67,14 @@ export function calculateProgressPercent(
   return Math.floor((Number(spentAmount) / limit) * 100);
 }
 
+/** Whether `dateStr` falls in the budget's own [startDate, startDate +
+ * period) window — BudgetThresholdListener (T6.2) uses this to narrow a
+ * transaction's category down to the budget(s) it actually affects. */
+export function isWithinBudgetPeriod(budget: Budget, dateStr: string): boolean {
+  const periodEnd = periodEndDate(budget.startDate, budget.period);
+  return dateStr >= budget.startDate && dateStr < periodEnd;
+}
+
 // JS Date's month rollover (e.g. Jan 31 + 1 month -> Mar 3) is an accepted
 // MVP tradeoff — no date library exists in this project yet and budgets
 // starting on the 29th-31st are a small edge case.
