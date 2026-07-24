@@ -33,4 +33,32 @@ export class TypeOrmInstallmentPaymentRepository implements InstallmentPaymentRe
       order: { dueDate: 'ASC' },
     });
   }
+
+  findById(id: string): Promise<InstallmentPayment | null> {
+    return this.repository.findOne({ where: { id } });
+  }
+
+  async markPaid(id: string): Promise<InstallmentPayment> {
+    await this.repository.update(
+      { id },
+      { status: 'paid', paidAt: new Date() },
+    );
+    const updated = await this.repository.findOne({ where: { id } });
+    if (!updated) {
+      throw new Error('Installment payment disappeared during update');
+    }
+    return updated;
+  }
+
+  findPendingDueBetween(
+    dateFrom: string,
+    dateTo: string,
+  ): Promise<InstallmentPayment[]> {
+    return this.repository
+      .createQueryBuilder('payment')
+      .where('payment.status = :status', { status: 'pending' })
+      .andWhere('payment.dueDate >= :dateFrom', { dateFrom })
+      .andWhere('payment.dueDate <= :dateTo', { dateTo })
+      .getMany();
+  }
 }

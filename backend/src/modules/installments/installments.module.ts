@@ -9,10 +9,22 @@ import { TypeOrmInstallmentPaymentRepository } from './infrastructure/repositori
 import { PaymentScheduleGeneratorService } from './application/services/payment-schedule-generator.service';
 import { CreateInstallmentUseCase } from './application/use-cases/create-installment.use-case';
 import { GetInstallmentsUseCase } from './application/use-cases/get-installments.use-case';
+import { MarkPaymentPaidUseCase } from './application/use-cases/mark-payment-paid.use-case';
 import { InstallmentsController } from './infrastructure/controllers/installments.controller';
+import { InstallmentReminderJob } from './infrastructure/jobs/installment-reminder.job';
+import { UsersModule } from '../users/users.module';
+import { NotificationsModule } from '../notifications/notifications.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Installment, InstallmentPayment])],
+  // NotificationsModule gives InstallmentReminderJob
+  // NotificationDispatcherService + NotificationRepository (T7.3);
+  // UsersModule gives it the user's locale for the push text — same
+  // shape BudgetsModule already uses for BudgetThresholdListener (T6.2).
+  imports: [
+    TypeOrmModule.forFeature([Installment, InstallmentPayment]),
+    UsersModule,
+    NotificationsModule,
+  ],
   controllers: [InstallmentsController],
   providers: [
     { provide: InstallmentRepository, useClass: TypeOrmInstallmentRepository },
@@ -23,6 +35,8 @@ import { InstallmentsController } from './infrastructure/controllers/installment
     PaymentScheduleGeneratorService,
     CreateInstallmentUseCase,
     GetInstallmentsUseCase,
+    MarkPaymentPaidUseCase,
+    InstallmentReminderJob,
   ],
   exports: [InstallmentRepository, InstallmentPaymentRepository],
 })

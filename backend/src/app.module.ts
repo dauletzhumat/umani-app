@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { ScheduleModule } from '@nestjs/schedule';
 import { envValidationSchema } from './config/env-validation.schema';
 import { HealthController } from './modules/health/health.controller';
 import { UsersModule } from './modules/users/users.module';
@@ -24,6 +25,11 @@ import { InstallmentsModule } from './modules/installments/installments.module';
     // an in-process pub/sub, not a durable queue; fine for MVP scope
     // since the listener runs synchronously within the same request.
     EventEmitterModule.forRoot(),
+    // MVP cron runs in-process via @nestjs/schedule (Development_Tasks.md
+    // §0) — the BullMQ scheduler/queue/worker split from
+    // 06_Architecture.md §12-13 is deferred to a Beta-phase task, no
+    // queue consumer exists anywhere in this codebase yet.
+    ScheduleModule.forRoot(),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
