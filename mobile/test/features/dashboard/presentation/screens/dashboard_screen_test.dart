@@ -6,36 +6,21 @@ import 'package:mobile/core/localization/app_localizations.dart';
 import 'package:mobile/features/categories/data/repositories/category_repository_impl.dart';
 import 'package:mobile/features/categories/domain/entities/category.dart';
 import 'package:mobile/features/categories/domain/repositories/category_repository.dart';
+import 'package:mobile/features/dashboard/presentation/screens/dashboard_screen.dart';
 import 'package:mobile/features/transactions/data/repositories/transaction_repository_impl.dart';
 import 'package:mobile/features/transactions/domain/entities/transaction.dart';
 import 'package:mobile/features/transactions/domain/repositories/transaction_repository.dart';
-import 'package:mobile/features/transactions/presentation/screens/transaction_list_screen.dart';
-import 'package:mobile/features/wallet/data/repositories/account_repository_impl.dart';
-import 'package:mobile/features/wallet/domain/entities/account.dart';
-import 'package:mobile/features/wallet/domain/repositories/account_repository.dart';
 
-class _EmptyAccountRepository implements AccountRepository {
-  @override
-  Future<List<Account>> fetchAll() async => const [];
+const _groceries = Category(
+  id: 'cat-1',
+  userId: null,
+  name: 'Продукты',
+  icon: 'shopping_cart',
+);
 
+class _FakeCategoryRepository implements CategoryRepository {
   @override
-  Future<Account> create({
-    required AccountType type,
-    required String name,
-    required String currency,
-  }) async {
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Account> update(String id, {String? name, bool? archived}) async {
-    throw UnimplementedError();
-  }
-}
-
-class _EmptyCategoryRepository implements CategoryRepository {
-  @override
-  Future<List<Category>> fetchAll() async => const [];
+  Future<List<Category>> fetchAll() async => const [_groceries];
 
   @override
   Future<Category> create({
@@ -47,23 +32,22 @@ class _EmptyCategoryRepository implements CategoryRepository {
   }
 }
 
-List<Transaction> _page(int count, int offset) => List.generate(
-  count,
-  (i) => Transaction(
-    id: 'tx-${offset + i}',
-    accountId: 'acc-1',
-    categoryId: null,
-    amount: '100.00',
-    currency: 'KZT',
-    type: TransactionType.expense,
-    occurredAt: '2026-01-01',
-    note: null,
-  ),
+Transaction _expense({
+  required String id,
+  required String amount,
+  String? categoryId,
+}) => Transaction(
+  id: id,
+  accountId: 'acc-1',
+  categoryId: categoryId,
+  amount: amount,
+  currency: 'KZT',
+  type: TransactionType.expense,
+  occurredAt: '2026-07-10',
+  note: null,
 );
 
-class _PagedTransactionRepository implements TransactionRepository {
-  final List<String?> cursorsRequested = [];
-
+class _FakeTransactionRepository implements TransactionRepository {
   @override
   Future<Transaction> create({
     required String accountId,
@@ -88,15 +72,26 @@ class _PagedTransactionRepository implements TransactionRepository {
     String? cursor,
     int? limit,
   }) async {
-    cursorsRequested.add(cursor);
-    if (cursor == null) {
+    if (type == TransactionType.expense) {
+      // Monthly-spending query (BalanceWidget): 15000 + 5000 = 20000.00.
       return TransactionPage(
-        items: _page(30, 0),
-        nextCursor: 'cursor-page-2',
-        hasMore: true,
+        items: [
+          _expense(id: 'tx-1', amount: '15000.00', categoryId: 'cat-1'),
+          _expense(id: 'tx-2', amount: '5000.00', categoryId: 'cat-1'),
+        ],
+        nextCursor: null,
+        hasMore: false,
       );
     }
-    return TransactionPage(items: _page(5, 30), nextCursor: null, hasMore: false);
+    // Recent-transactions query (RecentTransactionsWidget).
+    return TransactionPage(
+      items: [
+        _expense(id: 'tx-3', amount: '12400.00', categoryId: 'cat-1'),
+        _expense(id: 'tx-4', amount: '3000.00', categoryId: null),
+      ],
+      nextCursor: null,
+      hasMore: false,
+    );
   }
 
   @override
@@ -110,21 +105,16 @@ class _PagedTransactionRepository implements TransactionRepository {
 
 void main() {
   testWidgets(
-    'scrolling to the end of the list loads the next page using the cursor from the previous page',
-    (WidgetTester tester) async {
-      final fakeTransactionRepository = _PagedTransactionRepository();
-
+    'BalanceWidget and RecentTransactionsWidget render correctly on mocked provider data',
+    (tester) async {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
             transactionRepositoryProvider.overrideWithValue(
-              fakeTransactionRepository,
-            ),
-            accountRepositoryProvider.overrideWithValue(
-              _EmptyAccountRepository(),
+              _FakeTransactionRepository(),
             ),
             categoryRepositoryProvider.overrideWithValue(
-              _EmptyCategoryRepository(),
+              _FakeCategoryRepository(),
             ),
           ],
           child: MaterialApp(
@@ -136,18 +126,21 @@ void main() {
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
-            home: const TransactionListScreen(),
+            home: const DashboardScreen(),
           ),
         ),
       );
       await tester.pumpAndSettle();
 
-      expect(fakeTransactionRepository.cursorsRequested, [null]);
+      // BalanceWidget: 15000.00 + 5000.00 from the monthly-spending query.
+      expect(find.text('20000.00'), findsOneWidget);
 
-      await tester.fling(find.byType(ListView), const Offset(0, -3000), 3000);
-      await tester.pumpAndSettle();
-
-      expect(fakeTransactionRepository.cursorsRequested, [null, 'cursor-page-2']);
+      // RecentTransactionsWidget: both recent rows, one resolved to its
+      // category name and one falling back to "no category".
+      expect(find.text('Продукты'), findsOneWidget);
+      expect(find.text('Без категории'), findsOneWidget);
+      expect(find.text('-12400.00 KZT'), findsOneWidget);
+      expect(find.text('-3000.00 KZT'), findsOneWidget);
     },
   );
 }

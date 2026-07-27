@@ -54,6 +54,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
     String? dateFrom,
     String? dateTo,
     String? cursor,
+    int? limit,
   }) async {
     try {
       final response = await _dio.get<Map<String, dynamic>>(
@@ -65,6 +66,7 @@ class TransactionRepositoryImpl implements TransactionRepository {
           'dateFrom': ?dateFrom,
           'dateTo': ?dateTo,
           'cursor': ?cursor,
+          'limit': ?limit?.toString(),
         },
       );
       final body = response.data!;

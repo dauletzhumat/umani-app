@@ -76,6 +76,7 @@ class _FakeTransactionRepository implements TransactionRepository {
     String? dateFrom,
     String? dateTo,
     String? cursor,
+    int? limit,
   }) async {
     throw UnimplementedError();
   }
