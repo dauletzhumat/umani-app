@@ -14,6 +14,7 @@ import { OcrModule } from './modules/ocr/ocr.module';
 import { NotificationsModule } from './modules/notifications/notifications.module';
 import { BudgetsModule } from './modules/budgets/budgets.module';
 import { InstallmentsModule } from './modules/installments/installments.module';
+import { ReportsModule } from './modules/reports/reports.module';
 
 @Module({
   imports: [
@@ -55,6 +56,7 @@ import { InstallmentsModule } from './modules/installments/installments.module';
     NotificationsModule,
     BudgetsModule,
     InstallmentsModule,
+    ReportsModule,
   ],
   controllers: [HealthController],
   providers: [],
