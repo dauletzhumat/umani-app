@@ -173,6 +173,15 @@ class AppLocalizations {
       'dashboardEmptyBudgetsMessage': 'Пока нет бюджетов',
       'dashboardEmptyBudgetsButton': 'Создать первый бюджет',
       'dashboardEmptyTransactionsButton': 'Добавить первую операцию',
+      'statisticsScreenTitle': 'Статистика',
+      'statisticsPeriodWeek': 'Неделя',
+      'statisticsPeriodMonth': 'Месяц',
+      'statisticsPeriodYear': 'Год',
+      'statisticsOtherCategoryLabel': 'Другое',
+      'statisticsEmptyMessage': 'Нет расходов за период',
+      'statisticsInsightMoreTemplate': 'На {a}% больше, чем в прошлом периоде',
+      'statisticsInsightLessTemplate': 'На {a}% меньше, чем в прошлом периоде',
+      'statisticsTransactionsSectionTitle': 'Операции',
     },
     'kk': {
       'appName': 'AI Finance',
@@ -320,6 +329,15 @@ class AppLocalizations {
       'dashboardEmptyBudgetsMessage': 'Әзірге бюджеттер жоқ',
       'dashboardEmptyBudgetsButton': 'Алғашқы бюджетті құру',
       'dashboardEmptyTransactionsButton': 'Алғашқы операцияны қосу',
+      'statisticsScreenTitle': 'Статистика',
+      'statisticsPeriodWeek': 'Апта',
+      'statisticsPeriodMonth': 'Ай',
+      'statisticsPeriodYear': 'Жыл',
+      'statisticsOtherCategoryLabel': 'Басқа',
+      'statisticsEmptyMessage': 'Кезең бойынша шығын жоқ',
+      'statisticsInsightMoreTemplate': 'Өткен кезеңге қарағанда {a}% көп',
+      'statisticsInsightLessTemplate': 'Өткен кезеңге қарағанда {a}% аз',
+      'statisticsTransactionsSectionTitle': 'Операциялар',
     },
     'en': {
       'appName': 'AI Finance',
@@ -469,6 +487,15 @@ class AppLocalizations {
       'dashboardEmptyBudgetsMessage': 'No budgets yet',
       'dashboardEmptyBudgetsButton': 'Create first budget',
       'dashboardEmptyTransactionsButton': 'Add first transaction',
+      'statisticsScreenTitle': 'Statistics',
+      'statisticsPeriodWeek': 'Week',
+      'statisticsPeriodMonth': 'Month',
+      'statisticsPeriodYear': 'Year',
+      'statisticsOtherCategoryLabel': 'Other',
+      'statisticsEmptyMessage': 'No expenses for this period',
+      'statisticsInsightMoreTemplate': '{a}% more than the previous period',
+      'statisticsInsightLessTemplate': '{a}% less than the previous period',
+      'statisticsTransactionsSectionTitle': 'Transactions',
     },
   };
 
@@ -687,6 +714,19 @@ class AppLocalizations {
       _string('dashboardEmptyBudgetsButton');
   String get dashboardEmptyTransactionsButton =>
       _string('dashboardEmptyTransactionsButton');
+  String get statisticsScreenTitle => _string('statisticsScreenTitle');
+  String get statisticsPeriodWeek => _string('statisticsPeriodWeek');
+  String get statisticsPeriodMonth => _string('statisticsPeriodMonth');
+  String get statisticsPeriodYear => _string('statisticsPeriodYear');
+  String get statisticsOtherCategoryLabel =>
+      _string('statisticsOtherCategoryLabel');
+  String get statisticsEmptyMessage => _string('statisticsEmptyMessage');
+  String statisticsInsightMore(String percent) =>
+      _template('statisticsInsightMoreTemplate', percent);
+  String statisticsInsightLess(String percent) =>
+      _template('statisticsInsightLessTemplate', percent);
+  String get statisticsTransactionsSectionTitle =>
+      _string('statisticsTransactionsSectionTitle');
 
   /// Maps a backend error `code` (docs/08_API.md §5) to localized text,
   /// falling back to the raw message the server sent for anything not
