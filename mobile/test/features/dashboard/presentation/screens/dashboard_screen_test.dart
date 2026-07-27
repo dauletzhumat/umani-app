@@ -140,6 +140,121 @@ class _FakeTransactionRepository implements TransactionRepository {
   Future<void> delete(String id) async {}
 }
 
+class _EmptyTransactionRepository implements TransactionRepository {
+  @override
+  Future<Transaction> create({
+    required String accountId,
+    String? categoryId,
+    required String amount,
+    required String currency,
+    required TransactionType type,
+    String? occurredAt,
+    String? note,
+    String? source,
+  }) async {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<TransactionPage> fetchAll({
+    String? accountId,
+    String? categoryId,
+    TransactionType? type,
+    String? dateFrom,
+    String? dateTo,
+    String? cursor,
+    int? limit,
+  }) async => const TransactionPage(items: [], nextCursor: null, hasMore: false);
+
+  @override
+  Future<Transaction> update(String id, {String? categoryId}) async {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> delete(String id) async {}
+}
+
+class _CountingTransactionRepository implements TransactionRepository {
+  int fetchAllCallCount = 0;
+
+  @override
+  Future<Transaction> create({
+    required String accountId,
+    String? categoryId,
+    required String amount,
+    required String currency,
+    required TransactionType type,
+    String? occurredAt,
+    String? note,
+    String? source,
+  }) async {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<TransactionPage> fetchAll({
+    String? accountId,
+    String? categoryId,
+    TransactionType? type,
+    String? dateFrom,
+    String? dateTo,
+    String? cursor,
+    int? limit,
+  }) async {
+    fetchAllCallCount++;
+    return const TransactionPage(items: [], nextCursor: null, hasMore: false);
+  }
+
+  @override
+  Future<Transaction> update(String id, {String? categoryId}) async {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> delete(String id) async {}
+}
+
+class _CountingBudgetRepository implements BudgetRepository {
+  int fetchAllCallCount = 0;
+
+  @override
+  Future<List<Budget>> fetchAll() async {
+    fetchAllCallCount++;
+    return const [];
+  }
+
+  @override
+  Future<Budget> create({
+    required String categoryId,
+    required String amountLimit,
+    required BudgetPeriod period,
+    required String startDate,
+  }) async {
+    throw UnimplementedError();
+  }
+}
+
+class _CountingInstallmentRepository implements InstallmentRepository {
+  int fetchAllCallCount = 0;
+
+  @override
+  Future<InstallmentsOverview> fetchAll() async {
+    fetchAllCallCount++;
+    return const InstallmentsOverview(totalOutstanding: '0.00', installments: []);
+  }
+
+  @override
+  Future<Installment> create({
+    required String merchant,
+    required String totalAmount,
+    required int installmentsCount,
+    required String startDate,
+  }) async {
+    throw UnimplementedError();
+  }
+}
+
 void main() {
   testWidgets(
     'BalanceWidget and RecentTransactionsWidget render correctly on mocked provider data',
@@ -184,6 +299,109 @@ void main() {
       expect(find.text('Без категории'), findsOneWidget);
       expect(find.text('-12400.00 KZT'), findsOneWidget);
       expect(find.text('-3000.00 KZT'), findsOneWidget);
+    },
+  );
+
+  testWidgets(
+    'a user with no data sees a meaningful Empty-state with CTAs, not a blank screen',
+    (tester) async {
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            transactionRepositoryProvider.overrideWithValue(
+              _EmptyTransactionRepository(),
+            ),
+            categoryRepositoryProvider.overrideWithValue(
+              _FakeCategoryRepository(),
+            ),
+            budgetRepositoryProvider.overrideWithValue(
+              _EmptyBudgetRepository(),
+            ),
+            installmentRepositoryProvider.overrideWithValue(
+              _EmptyInstallmentRepository(),
+            ),
+          ],
+          child: MaterialApp(
+            locale: const Locale('ru'),
+            supportedLocales: AppLocalizations.supportedLocales,
+            localizationsDelegates: const [
+              AppLocalizationsDelegate(),
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            home: const DashboardScreen(),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('Создать первый бюджет'), findsOneWidget);
+      expect(find.text('Добавить первую операцию'), findsOneWidget);
+    },
+  );
+
+  testWidgets(
+    'pull-to-refresh re-fetches all four dashboard data sources',
+    (tester) async {
+      final transactionRepository = _CountingTransactionRepository();
+      final budgetRepository = _CountingBudgetRepository();
+      final installmentRepository = _CountingInstallmentRepository();
+
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            transactionRepositoryProvider.overrideWithValue(
+              transactionRepository,
+            ),
+            categoryRepositoryProvider.overrideWithValue(
+              _FakeCategoryRepository(),
+            ),
+            budgetRepositoryProvider.overrideWithValue(budgetRepository),
+            installmentRepositoryProvider.overrideWithValue(
+              installmentRepository,
+            ),
+          ],
+          child: MaterialApp(
+            locale: const Locale('ru'),
+            supportedLocales: AppLocalizations.supportedLocales,
+            localizationsDelegates: const [
+              AppLocalizationsDelegate(),
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            home: const DashboardScreen(),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      final transactionCallsBefore = transactionRepository.fetchAllCallCount;
+      final budgetCallsBefore = budgetRepository.fetchAllCallCount;
+      final installmentCallsBefore = installmentRepository.fetchAllCallCount;
+
+      await tester.fling(
+        find.byType(SingleChildScrollView),
+        const Offset(0, 300),
+        1000,
+      );
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
+
+      expect(
+        transactionRepository.fetchAllCallCount,
+        greaterThan(transactionCallsBefore),
+      );
+      expect(
+        budgetRepository.fetchAllCallCount,
+        greaterThan(budgetCallsBefore),
+      );
+      expect(
+        installmentRepository.fetchAllCallCount,
+        greaterThan(installmentCallsBefore),
+      );
     },
   );
 }

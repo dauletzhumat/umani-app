@@ -3,15 +3,26 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/localization/app_localizations.dart';
 import '../../../budgets/data/repositories/budget_repository_impl.dart';
 import '../../../budgets/presentation/widgets/budget_card.dart';
+import '../../../budgets/presentation/widgets/create_budget_sheet.dart';
+import 'dashboard_empty_state.dart';
+import 'dashboard_skeleton.dart';
 
 /// Preview of the 2-3 "hottest" budgets (docs/05_UX.md §4) — closest to
 /// their limit, so the user sees what needs attention first. Reuses
 /// BudgetCard (T6.3) as-is rather than duplicating its progress-bar/
-/// color logic.
+/// color logic. Empty state replaces the preview with a CTA to create
+/// the first budget (T8.3, same §4).
 class BudgetsPreviewWidget extends ConsumerWidget {
   const BudgetsPreviewWidget({super.key});
 
   static const _maxPreviewCount = 3;
+
+  Future<void> _createFirstBudget(BuildContext context, WidgetRef ref) async {
+    final created = await CreateBudgetSheet.show(context);
+    if (created != null) {
+      ref.invalidate(budgetListProvider);
+    }
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,7 +31,13 @@ class BudgetsPreviewWidget extends ConsumerWidget {
 
     return budgetsAsync.when(
       data: (budgets) {
-        if (budgets.isEmpty) return const SizedBox.shrink();
+        if (budgets.isEmpty) {
+          return DashboardEmptyState(
+            message: l10n.dashboardEmptyBudgetsMessage,
+            buttonLabel: l10n.dashboardEmptyBudgetsButton,
+            onTap: () => _createFirstBudget(context, ref),
+          );
+        }
 
         final hottest = [...budgets]
           ..sort((a, b) => b.progressPercent.compareTo(a.progressPercent));
@@ -41,9 +58,9 @@ class BudgetsPreviewWidget extends ConsumerWidget {
           ],
         );
       },
-      loading: () => const Center(child: CircularProgressIndicator()),
+      loading: () => const DashboardSkeleton(),
       // A dashboard preview shouldn't surface an error card of its own —
-      // it just quietly omits itself, same as the empty case.
+      // it just quietly omits itself, same as before.
       error: (error, _) => const SizedBox.shrink(),
     );
   }

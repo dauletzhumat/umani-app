@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/localization/app_localizations.dart';
 import '../../../installments/data/repositories/installment_repository_impl.dart';
+import 'dashboard_skeleton.dart';
 
 /// The single nearest upcoming payment across all active installments
 /// (docs/05_UX.md §4) — entirely hidden when there isn't one (no
@@ -58,17 +59,7 @@ class UpcomingInstallmentWidget extends ConsumerWidget {
           ),
         );
       },
-      loading:
-          () => const SizedBox(
-            height: 48,
-            child: Center(
-              child: SizedBox(
-                width: 20,
-                height: 20,
-                child: CircularProgressIndicator(strokeWidth: 2),
-              ),
-            ),
-          ),
+      loading: () => const DashboardSkeleton(height: 48),
       // Same as BudgetsPreviewWidget: a failed load just quietly omits
       // this widget rather than showing an error card on the dashboard.
       error: (error, _) => const SizedBox.shrink(),

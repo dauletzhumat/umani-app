@@ -170,6 +170,9 @@ class AppLocalizations {
       'dayFormOne': 'день',
       'dayFormFew': 'дня',
       'dayFormMany': 'дней',
+      'dashboardEmptyBudgetsMessage': 'Пока нет бюджетов',
+      'dashboardEmptyBudgetsButton': 'Создать первый бюджет',
+      'dashboardEmptyTransactionsButton': 'Добавить первую операцию',
     },
     'kk': {
       'appName': 'AI Finance',
@@ -314,6 +317,9 @@ class AppLocalizations {
       'dayFormOne': 'күн',
       'dayFormFew': 'күн',
       'dayFormMany': 'күн',
+      'dashboardEmptyBudgetsMessage': 'Әзірге бюджеттер жоқ',
+      'dashboardEmptyBudgetsButton': 'Алғашқы бюджетті құру',
+      'dashboardEmptyTransactionsButton': 'Алғашқы операцияны қосу',
     },
     'en': {
       'appName': 'AI Finance',
@@ -460,6 +466,9 @@ class AppLocalizations {
       'dayFormOne': 'day',
       'dayFormFew': 'days',
       'dayFormMany': 'days',
+      'dashboardEmptyBudgetsMessage': 'No budgets yet',
+      'dashboardEmptyBudgetsButton': 'Create first budget',
+      'dashboardEmptyTransactionsButton': 'Add first transaction',
     },
   };
 
@@ -671,6 +680,13 @@ class AppLocalizations {
       b: _string(dayWordKey),
     );
   }
+
+  String get dashboardEmptyBudgetsMessage =>
+      _string('dashboardEmptyBudgetsMessage');
+  String get dashboardEmptyBudgetsButton =>
+      _string('dashboardEmptyBudgetsButton');
+  String get dashboardEmptyTransactionsButton =>
+      _string('dashboardEmptyTransactionsButton');
 
   /// Maps a backend error `code` (docs/08_API.md §5) to localized text,
   /// falling back to the raw message the server sent for anything not

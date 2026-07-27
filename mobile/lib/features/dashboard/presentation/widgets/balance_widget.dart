@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/localization/app_localizations.dart';
 import '../../../transactions/data/repositories/transaction_repository_impl.dart';
 import '../../../transactions/domain/entities/transaction.dart';
+import 'dashboard_skeleton.dart';
 
 /// "Остаток бюджета периода" (docs/05_UX.md §4) needs a sum across all
 /// the user's budgets — but this task (T8.1) only depends on T4.9/T3.2,
@@ -58,14 +59,11 @@ class BalanceWidget extends ConsumerWidget {
             const SizedBox(height: 4),
             spendingAsync.when(
               data:
-                  (amount) =>
-                      Text(amount, style: Theme.of(context).textTheme.headlineMedium),
-              loading:
-                  () => const SizedBox(
-                    height: 32,
-                    width: 32,
-                    child: CircularProgressIndicator(strokeWidth: 2),
+                  (amount) => Text(
+                    amount,
+                    style: Theme.of(context).textTheme.headlineMedium,
                   ),
+              loading: () => const DashboardSkeleton(height: 32),
               error: (error, _) => Text(l10n.errorNetwork),
             ),
           ],
