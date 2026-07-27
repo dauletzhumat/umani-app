@@ -35,6 +35,7 @@ abstract class TransactionRepository {
     String? dateFrom,
     String? dateTo,
     String? cursor,
+    int? limit,
   });
 
   /// PATCH /transactions/{id} — used for the swipe-right quick

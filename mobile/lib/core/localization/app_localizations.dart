@@ -160,6 +160,10 @@ class AppLocalizations {
       'addInstallmentStartDateLabel': 'Дата начала',
       'addInstallmentSaveButton': 'Сохранить',
       'installmentCreatedToast': 'Рассрочка добавлена',
+      'dashboardTitle': 'Главная',
+      'balanceWidgetMonthlySpendingLabel': 'Потрачено в этом месяце',
+      'recentTransactionsTitle': 'Последние операции',
+      'recentTransactionsEmptyMessage': 'Пока нет операций',
     },
     'kk': {
       'appName': 'AI Finance',
@@ -294,6 +298,10 @@ class AppLocalizations {
       'addInstallmentStartDateLabel': 'Басталу күні',
       'addInstallmentSaveButton': 'Сақтау',
       'installmentCreatedToast': 'Бөліп төлеу қосылды',
+      'dashboardTitle': 'Басты бет',
+      'balanceWidgetMonthlySpendingLabel': 'Осы айда жұмсалды',
+      'recentTransactionsTitle': 'Соңғы операциялар',
+      'recentTransactionsEmptyMessage': 'Әзірге операциялар жоқ',
     },
     'en': {
       'appName': 'AI Finance',
@@ -430,6 +438,10 @@ class AppLocalizations {
       'addInstallmentStartDateLabel': 'Start date',
       'addInstallmentSaveButton': 'Save',
       'installmentCreatedToast': 'Installment added',
+      'dashboardTitle': 'Dashboard',
+      'balanceWidgetMonthlySpendingLabel': 'Spent this month',
+      'recentTransactionsTitle': 'Recent transactions',
+      'recentTransactionsEmptyMessage': 'No transactions yet',
     },
   };
 
@@ -606,6 +618,12 @@ class AppLocalizations {
       _string('addInstallmentStartDateLabel');
   String get addInstallmentSaveButton => _string('addInstallmentSaveButton');
   String get installmentCreatedToast => _string('installmentCreatedToast');
+  String get dashboardTitle => _string('dashboardTitle');
+  String get balanceWidgetMonthlySpendingLabel =>
+      _string('balanceWidgetMonthlySpendingLabel');
+  String get recentTransactionsTitle => _string('recentTransactionsTitle');
+  String get recentTransactionsEmptyMessage =>
+      _string('recentTransactionsEmptyMessage');
 
   /// Maps a backend error `code` (docs/08_API.md §5) to localized text,
   /// falling back to the raw message the server sent for anything not
