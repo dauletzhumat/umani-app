@@ -15,6 +15,16 @@ class _FakeInstallmentRepository implements InstallmentRepository {
 
   @override
   Future<InstallmentsOverview> fetchAll() async => overview;
+
+  @override
+  Future<Installment> create({
+    required String merchant,
+    required String totalAmount,
+    required int installmentsCount,
+    required String startDate,
+  }) async {
+    throw UnimplementedError();
+  }
 }
 
 Future<void> _pumpScreen(

@@ -24,6 +24,31 @@ class InstallmentRepositoryImpl implements InstallmentRepository {
       throw ApiException.fromDioException(exception);
     }
   }
+
+  @override
+  Future<Installment> create({
+    required String merchant,
+    required String totalAmount,
+    required int installmentsCount,
+    required String startDate,
+  }) async {
+    try {
+      final response = await _dio.post<Map<String, dynamic>>(
+        '/installments',
+        data: {
+          'merchant': merchant,
+          'totalAmount': totalAmount,
+          'installmentsCount': installmentsCount,
+          'startDate': startDate,
+        },
+      );
+      return Installment.fromJson(
+        response.data!['data'] as Map<String, dynamic>,
+      );
+    } on DioException catch (exception) {
+      throw ApiException.fromDioException(exception);
+    }
+  }
 }
 
 final installmentRepositoryProvider = Provider<InstallmentRepository>((ref) {
