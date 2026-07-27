@@ -47,6 +47,38 @@ class _FakeReportsRepository implements ReportsRepository {
   }
 }
 
+class _FakeReportsRepositoryWithGrowth implements ReportsRepository {
+  @override
+  Future<ByCategoryReport> fetchByCategory({required String period}) async {
+    return const ByCategoryReport(
+      dateFrom: '2026-07-01',
+      dateTo: '2026-07-27',
+      totalExpense: '10000.00',
+      categories: [
+        CategoryBreakdown(
+          categoryId: 'cat-1',
+          categoryName: 'Продукты',
+          amount: '10000.00',
+          percentage: 100,
+        ),
+      ],
+    );
+  }
+
+  @override
+  Future<ReportsSummary> fetchSummary({required String period}) async {
+    // 10000 vs 8000 -> +25%, exercising the {value} substitution in
+    // statisticsInsightMoreTemplate (a real bug once used {a} while
+    // _template only ever replaces {value} — the literal "{a}" leaked
+    // into the UI unsubstituted until this test caught it).
+    return const ReportsSummary(
+      totalIncome: '0.00',
+      totalExpense: '10000.00',
+      previousPeriodTotalExpense: '8000.00',
+    );
+  }
+}
+
 Transaction _expense({
   required String id,
   required String categoryId,
@@ -156,6 +188,41 @@ void main() {
 
       expect(find.text('-6000.00 KZT'), findsOneWidget);
       expect(find.text('-4000.00 KZT'), findsOneWidget);
+    },
+  );
+
+  testWidgets(
+    'the period-comparison insight text substitutes the percent value correctly',
+    (tester) async {
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            reportsRepositoryProvider.overrideWithValue(
+              _FakeReportsRepositoryWithGrowth(),
+            ),
+            transactionRepositoryProvider.overrideWithValue(
+              _FakeTransactionRepository(),
+            ),
+          ],
+          child: MaterialApp(
+            locale: const Locale('ru'),
+            supportedLocales: AppLocalizations.supportedLocales,
+            localizationsDelegates: const [
+              AppLocalizationsDelegate(),
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            home: const StatisticsScreen(),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      expect(
+        find.text('На 25% больше, чем в прошлом периоде'),
+        findsOneWidget,
+      );
     },
   );
 }
