@@ -179,9 +179,34 @@ class AppLocalizations {
       'statisticsPeriodYear': 'Год',
       'statisticsOtherCategoryLabel': 'Другое',
       'statisticsEmptyMessage': 'Нет расходов за период',
-      'statisticsInsightMoreTemplate': 'На {a}% больше, чем в прошлом периоде',
-      'statisticsInsightLessTemplate': 'На {a}% меньше, чем в прошлом периоде',
+      'statisticsInsightMoreTemplate': 'На {value}% больше, чем в прошлом периоде',
+      'statisticsInsightLessTemplate': 'На {value}% меньше, чем в прошлом периоде',
       'statisticsTransactionsSectionTitle': 'Операции',
+      'settingsScreenTitle': 'Настройки',
+      'settingsSectionProfile': 'Профиль',
+      'settingsNameLabel': 'Имя',
+      'settingsPhoneLabel': 'Телефон',
+      'settingsEmailLabel': 'Email',
+      'settingsCurrencyLabel': 'Валюта по умолчанию',
+      'settingsSaveProfile': 'Сохранить',
+      'settingsProfileSaved': 'Профиль обновлён',
+      'settingsSectionLanguage': 'Язык',
+      'settingsSectionNotifications': 'Уведомления',
+      'settingsNotifBudgetLimits': 'Лимиты бюджета',
+      'settingsNotifInstallmentPayments': 'Платежи по рассрочкам',
+      'settingsNotifAiInsights': 'AI-инсайты',
+      'settingsNotifMarketing': 'Маркетинговые уведомления',
+      'settingsSectionData': 'Данные',
+      'settingsDeleteAccount': 'Удалить аккаунт',
+      'settingsDeleteAccountConfirmTitle': 'Удалить аккаунт?',
+      'settingsDeleteAccountConfirmMessage':
+          'Это действие нельзя отменить напрямую. По истечении периода ожидания все ваши данные будут удалены безвозвратно.',
+      'settingsDeleteAccountConfirmButton': 'Удалить',
+      'settingsDeleteAccountCancelButton': 'Отмена',
+      'settingsDeleteAccountScheduledTitle': 'Аккаунт будет удалён',
+      'settingsDeleteAccountScheduledMessageTemplate':
+          'Ваш аккаунт будет полностью удалён {value}.',
+      'settingsDeleteAccountScheduledOk': 'Понятно',
     },
     'kk': {
       'appName': 'AI Finance',
@@ -335,9 +360,34 @@ class AppLocalizations {
       'statisticsPeriodYear': 'Жыл',
       'statisticsOtherCategoryLabel': 'Басқа',
       'statisticsEmptyMessage': 'Кезең бойынша шығын жоқ',
-      'statisticsInsightMoreTemplate': 'Өткен кезеңге қарағанда {a}% көп',
-      'statisticsInsightLessTemplate': 'Өткен кезеңге қарағанда {a}% аз',
+      'statisticsInsightMoreTemplate': 'Өткен кезеңге қарағанда {value}% көп',
+      'statisticsInsightLessTemplate': 'Өткен кезеңге қарағанда {value}% аз',
       'statisticsTransactionsSectionTitle': 'Операциялар',
+      'settingsScreenTitle': 'Баптаулар',
+      'settingsSectionProfile': 'Профиль',
+      'settingsNameLabel': 'Аты',
+      'settingsPhoneLabel': 'Телефон',
+      'settingsEmailLabel': 'Email',
+      'settingsCurrencyLabel': 'Әдепкі валюта',
+      'settingsSaveProfile': 'Сақтау',
+      'settingsProfileSaved': 'Профиль жаңартылды',
+      'settingsSectionLanguage': 'Тіл',
+      'settingsSectionNotifications': 'Хабарландырулар',
+      'settingsNotifBudgetLimits': 'Бюджет лимиттері',
+      'settingsNotifInstallmentPayments': 'Бөліп төлеу төлемдері',
+      'settingsNotifAiInsights': 'AI-инсайттар',
+      'settingsNotifMarketing': 'Маркетингтік хабарландырулар',
+      'settingsSectionData': 'Деректер',
+      'settingsDeleteAccount': 'Аккаунтты жою',
+      'settingsDeleteAccountConfirmTitle': 'Аккаунтты жоясыз ба?',
+      'settingsDeleteAccountConfirmMessage':
+          'Бұл әрекетті тікелей болдырмау мүмкін емес. Күту кезеңі аяқталғаннан кейін барлық деректеріңіз біржола жойылады.',
+      'settingsDeleteAccountConfirmButton': 'Жою',
+      'settingsDeleteAccountCancelButton': 'Бас тарту',
+      'settingsDeleteAccountScheduledTitle': 'Аккаунт жойылады',
+      'settingsDeleteAccountScheduledMessageTemplate':
+          'Сіздің аккаунтыңыз {value} толық жойылады.',
+      'settingsDeleteAccountScheduledOk': 'Түсінікті',
     },
     'en': {
       'appName': 'AI Finance',
@@ -493,9 +543,34 @@ class AppLocalizations {
       'statisticsPeriodYear': 'Year',
       'statisticsOtherCategoryLabel': 'Other',
       'statisticsEmptyMessage': 'No expenses for this period',
-      'statisticsInsightMoreTemplate': '{a}% more than the previous period',
-      'statisticsInsightLessTemplate': '{a}% less than the previous period',
+      'statisticsInsightMoreTemplate': '{value}% more than the previous period',
+      'statisticsInsightLessTemplate': '{value}% less than the previous period',
       'statisticsTransactionsSectionTitle': 'Transactions',
+      'settingsScreenTitle': 'Settings',
+      'settingsSectionProfile': 'Profile',
+      'settingsNameLabel': 'Name',
+      'settingsPhoneLabel': 'Phone',
+      'settingsEmailLabel': 'Email',
+      'settingsCurrencyLabel': 'Default currency',
+      'settingsSaveProfile': 'Save',
+      'settingsProfileSaved': 'Profile updated',
+      'settingsSectionLanguage': 'Language',
+      'settingsSectionNotifications': 'Notifications',
+      'settingsNotifBudgetLimits': 'Budget limits',
+      'settingsNotifInstallmentPayments': 'Installment payments',
+      'settingsNotifAiInsights': 'AI insights',
+      'settingsNotifMarketing': 'Marketing notifications',
+      'settingsSectionData': 'Data',
+      'settingsDeleteAccount': 'Delete account',
+      'settingsDeleteAccountConfirmTitle': 'Delete account?',
+      'settingsDeleteAccountConfirmMessage':
+          'This can\'t be undone directly. Once the grace period ends, all your data will be permanently erased.',
+      'settingsDeleteAccountConfirmButton': 'Delete',
+      'settingsDeleteAccountCancelButton': 'Cancel',
+      'settingsDeleteAccountScheduledTitle': 'Account scheduled for deletion',
+      'settingsDeleteAccountScheduledMessageTemplate':
+          'Your account will be fully deleted on {value}.',
+      'settingsDeleteAccountScheduledOk': 'Got it',
     },
   };
 
@@ -727,6 +802,39 @@ class AppLocalizations {
       _template('statisticsInsightLessTemplate', percent);
   String get statisticsTransactionsSectionTitle =>
       _string('statisticsTransactionsSectionTitle');
+  String get settingsScreenTitle => _string('settingsScreenTitle');
+  String get settingsSectionProfile => _string('settingsSectionProfile');
+  String get settingsNameLabel => _string('settingsNameLabel');
+  String get settingsPhoneLabel => _string('settingsPhoneLabel');
+  String get settingsEmailLabel => _string('settingsEmailLabel');
+  String get settingsCurrencyLabel => _string('settingsCurrencyLabel');
+  String get settingsSaveProfile => _string('settingsSaveProfile');
+  String get settingsProfileSaved => _string('settingsProfileSaved');
+  String get settingsSectionLanguage => _string('settingsSectionLanguage');
+  String get settingsSectionNotifications =>
+      _string('settingsSectionNotifications');
+  String get settingsNotifBudgetLimits =>
+      _string('settingsNotifBudgetLimits');
+  String get settingsNotifInstallmentPayments =>
+      _string('settingsNotifInstallmentPayments');
+  String get settingsNotifAiInsights => _string('settingsNotifAiInsights');
+  String get settingsNotifMarketing => _string('settingsNotifMarketing');
+  String get settingsSectionData => _string('settingsSectionData');
+  String get settingsDeleteAccount => _string('settingsDeleteAccount');
+  String get settingsDeleteAccountConfirmTitle =>
+      _string('settingsDeleteAccountConfirmTitle');
+  String get settingsDeleteAccountConfirmMessage =>
+      _string('settingsDeleteAccountConfirmMessage');
+  String get settingsDeleteAccountConfirmButton =>
+      _string('settingsDeleteAccountConfirmButton');
+  String get settingsDeleteAccountCancelButton =>
+      _string('settingsDeleteAccountCancelButton');
+  String get settingsDeleteAccountScheduledTitle =>
+      _string('settingsDeleteAccountScheduledTitle');
+  String settingsDeleteAccountScheduledMessage(String date) =>
+      _template('settingsDeleteAccountScheduledMessageTemplate', date);
+  String get settingsDeleteAccountScheduledOk =>
+      _string('settingsDeleteAccountScheduledOk');
 
   /// Maps a backend error `code` (docs/08_API.md §5) to localized text,
   /// falling back to the raw message the server sent for anything not
