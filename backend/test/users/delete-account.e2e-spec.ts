@@ -65,7 +65,8 @@ describe('Users DELETE /me (e2e)', () => {
       .set('Authorization', `Bearer ${accessToken}`)
       .expect(202);
 
-    const deleteBody = deleteResponse.body as DataEnvelope<DeleteAccountResponse>;
+    const deleteBody =
+      deleteResponse.body as DataEnvelope<DeleteAccountResponse>;
     const scheduledPurgeAt = new Date(deleteBody.data.scheduledPurgeAt);
     expect(scheduledPurgeAt.getTime()).toBeGreaterThan(beforeCall);
 
