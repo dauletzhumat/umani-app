@@ -164,6 +164,12 @@ class AppLocalizations {
       'balanceWidgetMonthlySpendingLabel': 'Потрачено в этом месяце',
       'recentTransactionsTitle': 'Последние операции',
       'recentTransactionsEmptyMessage': 'Пока нет операций',
+      'upcomingInstallmentTitle': 'Ближайший платёж',
+      'upcomingInstallmentMerchantAmountTemplate': '{a} · {b}',
+      'upcomingInstallmentInDaysTemplate': 'через {a} {b}',
+      'dayFormOne': 'день',
+      'dayFormFew': 'дня',
+      'dayFormMany': 'дней',
     },
     'kk': {
       'appName': 'AI Finance',
@@ -302,6 +308,12 @@ class AppLocalizations {
       'balanceWidgetMonthlySpendingLabel': 'Осы айда жұмсалды',
       'recentTransactionsTitle': 'Соңғы операциялар',
       'recentTransactionsEmptyMessage': 'Әзірге операциялар жоқ',
+      'upcomingInstallmentTitle': 'Жақын арадағы төлем',
+      'upcomingInstallmentMerchantAmountTemplate': '{a} · {b}',
+      'upcomingInstallmentInDaysTemplate': '{a} {b} ішінде',
+      'dayFormOne': 'күн',
+      'dayFormFew': 'күн',
+      'dayFormMany': 'күн',
     },
     'en': {
       'appName': 'AI Finance',
@@ -442,6 +454,12 @@ class AppLocalizations {
       'balanceWidgetMonthlySpendingLabel': 'Spent this month',
       'recentTransactionsTitle': 'Recent transactions',
       'recentTransactionsEmptyMessage': 'No transactions yet',
+      'upcomingInstallmentTitle': 'Upcoming payment',
+      'upcomingInstallmentMerchantAmountTemplate': '{a} · {b}',
+      'upcomingInstallmentInDaysTemplate': 'in {a} {b}',
+      'dayFormOne': 'day',
+      'dayFormFew': 'days',
+      'dayFormMany': 'days',
     },
   };
 
@@ -624,6 +642,35 @@ class AppLocalizations {
   String get recentTransactionsTitle => _string('recentTransactionsTitle');
   String get recentTransactionsEmptyMessage =>
       _string('recentTransactionsEmptyMessage');
+  String get upcomingInstallmentTitle => _string('upcomingInstallmentTitle');
+  String upcomingInstallmentMerchantAmount(String merchant, String amount) =>
+      _template2(
+        'upcomingInstallmentMerchantAmountTemplate',
+        a: merchant,
+        b: amount,
+      );
+
+  /// Russian has three plural forms for counts (1 день / 2-4 дня / 5+
+  /// дней) — this is directly-visible flagship Dashboard copy from
+  /// 05_UX.md's mockup, not server push text, so it's worth getting
+  /// right rather than sidestepping like T7.3's notification copy did.
+  String upcomingInstallmentInDays(int days) {
+    final mod10 = days % 10;
+    final mod100 = days % 100;
+    final String dayWordKey;
+    if (mod10 == 1 && mod100 != 11) {
+      dayWordKey = 'dayFormOne';
+    } else if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) {
+      dayWordKey = 'dayFormFew';
+    } else {
+      dayWordKey = 'dayFormMany';
+    }
+    return _template2(
+      'upcomingInstallmentInDaysTemplate',
+      a: days.toString(),
+      b: _string(dayWordKey),
+    );
+  }
 
   /// Maps a backend error `code` (docs/08_API.md §5) to localized text,
   /// falling back to the raw message the server sent for anything not
