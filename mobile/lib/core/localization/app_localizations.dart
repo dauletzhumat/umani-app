@@ -153,6 +153,13 @@ class AppLocalizations {
       'installmentCardInstallmentsCountTemplate': '{value} платежей',
       'installmentCardNextPaymentTemplate': '{a} — {b}',
       'installmentCardNoNextPayment': 'Нет предстоящих платежей',
+      'addInstallmentSheetTitle': 'Новая рассрочка',
+      'addInstallmentMerchantLabel': 'Магазин',
+      'addInstallmentAmountLabel': 'Сумма',
+      'addInstallmentCountLabel': 'Количество платежей',
+      'addInstallmentStartDateLabel': 'Дата начала',
+      'addInstallmentSaveButton': 'Сохранить',
+      'installmentCreatedToast': 'Рассрочка добавлена',
     },
     'kk': {
       'appName': 'AI Finance',
@@ -280,6 +287,13 @@ class AppLocalizations {
       'installmentCardInstallmentsCountTemplate': '{value} төлем',
       'installmentCardNextPaymentTemplate': '{a} — {b}',
       'installmentCardNoNextPayment': 'Алдағы төлемдер жоқ',
+      'addInstallmentSheetTitle': 'Жаңа бөліп төлеу',
+      'addInstallmentMerchantLabel': 'Дүкен',
+      'addInstallmentAmountLabel': 'Сома',
+      'addInstallmentCountLabel': 'Төлемдер саны',
+      'addInstallmentStartDateLabel': 'Басталу күні',
+      'addInstallmentSaveButton': 'Сақтау',
+      'installmentCreatedToast': 'Бөліп төлеу қосылды',
     },
     'en': {
       'appName': 'AI Finance',
@@ -409,6 +423,13 @@ class AppLocalizations {
       'installmentCardInstallmentsCountTemplate': '{value} payments',
       'installmentCardNextPaymentTemplate': '{a} — {b}',
       'installmentCardNoNextPayment': 'No upcoming payments',
+      'addInstallmentSheetTitle': 'New installment',
+      'addInstallmentMerchantLabel': 'Merchant',
+      'addInstallmentAmountLabel': 'Amount',
+      'addInstallmentCountLabel': 'Number of payments',
+      'addInstallmentStartDateLabel': 'Start date',
+      'addInstallmentSaveButton': 'Save',
+      'installmentCreatedToast': 'Installment added',
     },
   };
 
@@ -576,6 +597,15 @@ class AppLocalizations {
       _template2('installmentCardNextPaymentTemplate', a: amount, b: dueDate);
   String get installmentCardNoNextPayment =>
       _string('installmentCardNoNextPayment');
+  String get addInstallmentSheetTitle => _string('addInstallmentSheetTitle');
+  String get addInstallmentMerchantLabel =>
+      _string('addInstallmentMerchantLabel');
+  String get addInstallmentAmountLabel => _string('addInstallmentAmountLabel');
+  String get addInstallmentCountLabel => _string('addInstallmentCountLabel');
+  String get addInstallmentStartDateLabel =>
+      _string('addInstallmentStartDateLabel');
+  String get addInstallmentSaveButton => _string('addInstallmentSaveButton');
+  String get installmentCreatedToast => _string('installmentCreatedToast');
 
   /// Maps a backend error `code` (docs/08_API.md §5) to localized text,
   /// falling back to the raw message the server sent for anything not
