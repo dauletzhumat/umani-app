@@ -24,4 +24,7 @@ export abstract class UserRepository {
     id: string,
     changes: { name?: string; locale?: string; defaultCurrency?: string },
   ): Promise<User>;
+
+  /** Soft-deletes the user and schedules the eventual full purge. */
+  abstract softDelete(id: string, scheduledPurgeAt: Date): Promise<void>;
 }
