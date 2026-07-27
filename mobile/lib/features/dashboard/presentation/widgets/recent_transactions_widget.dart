@@ -5,6 +5,9 @@ import '../../../categories/data/repositories/category_repository_impl.dart';
 import '../../../categories/domain/entities/category.dart';
 import '../../../transactions/data/repositories/transaction_repository_impl.dart';
 import '../../../transactions/domain/entities/transaction.dart';
+import '../../../transactions/presentation/screens/manual_entry_screen.dart';
+import 'dashboard_empty_state.dart';
+import 'dashboard_skeleton.dart';
 
 /// Last 3-5 operations (docs/05_UX.md §4) — read-only preview, unlike
 /// TransactionListScreen's swipeable feed; there's no "Все" link target
@@ -29,45 +32,55 @@ class RecentTransactionsWidget extends ConsumerWidget {
     return null;
   }
 
+  Future<void> _addFirstTransaction(BuildContext context, WidgetRef ref) async {
+    await ManualEntryScreen.show(context);
+    ref.invalidate(recentTransactionsProvider);
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context);
     final transactionsAsync = ref.watch(recentTransactionsProvider);
     final categories = ref.watch(categoryListProvider).value ?? const [];
 
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              l10n.recentTransactionsTitle,
-              style: Theme.of(context).textTheme.titleMedium,
+    return transactionsAsync.when(
+      data: (items) {
+        if (items.isEmpty) {
+          return DashboardEmptyState(
+            message: l10n.recentTransactionsEmptyMessage,
+            buttonLabel: l10n.dashboardEmptyTransactionsButton,
+            onTap: () => _addFirstTransaction(context, ref),
+          );
+        }
+        return Card(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  l10n.recentTransactionsTitle,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+                const SizedBox(height: 8),
+                for (final transaction in items)
+                  _TransactionRow(
+                    transaction: transaction,
+                    category: _categoryById(
+                      categories,
+                      transaction.categoryId,
+                    ),
+                  ),
+              ],
             ),
-            const SizedBox(height: 8),
-            transactionsAsync.when(
-              data: (items) {
-                if (items.isEmpty) {
-                  return Text(l10n.recentTransactionsEmptyMessage);
-                }
-                return Column(
-                  children: [
-                    for (final transaction in items)
-                      _TransactionRow(
-                        transaction: transaction,
-                        category: _categoryById(
-                          categories,
-                          transaction.categoryId,
-                        ),
-                      ),
-                  ],
-                );
-              },
-              loading: () => const Center(child: CircularProgressIndicator()),
-              error: (error, _) => Text(l10n.errorNetwork),
-            ),
-          ],
+          ),
+        );
+      },
+      loading: () => const DashboardSkeleton(),
+      error: (error, _) => Card(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Text(l10n.errorNetwork),
         ),
       ),
     );
