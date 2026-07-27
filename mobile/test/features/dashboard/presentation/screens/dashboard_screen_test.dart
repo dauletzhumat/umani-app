@@ -3,13 +3,50 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobile/core/localization/app_localizations.dart';
+import 'package:mobile/features/budgets/data/repositories/budget_repository_impl.dart';
+import 'package:mobile/features/budgets/domain/entities/budget.dart';
+import 'package:mobile/features/budgets/domain/repositories/budget_repository.dart';
 import 'package:mobile/features/categories/data/repositories/category_repository_impl.dart';
 import 'package:mobile/features/categories/domain/entities/category.dart';
 import 'package:mobile/features/categories/domain/repositories/category_repository.dart';
 import 'package:mobile/features/dashboard/presentation/screens/dashboard_screen.dart';
+import 'package:mobile/features/installments/data/repositories/installment_repository_impl.dart';
+import 'package:mobile/features/installments/domain/entities/installment.dart';
+import 'package:mobile/features/installments/domain/repositories/installment_repository.dart';
 import 'package:mobile/features/transactions/data/repositories/transaction_repository_impl.dart';
 import 'package:mobile/features/transactions/domain/entities/transaction.dart';
 import 'package:mobile/features/transactions/domain/repositories/transaction_repository.dart';
+
+class _EmptyBudgetRepository implements BudgetRepository {
+  @override
+  Future<List<Budget>> fetchAll() async => const [];
+
+  @override
+  Future<Budget> create({
+    required String categoryId,
+    required String amountLimit,
+    required BudgetPeriod period,
+    required String startDate,
+  }) async {
+    throw UnimplementedError();
+  }
+}
+
+class _EmptyInstallmentRepository implements InstallmentRepository {
+  @override
+  Future<InstallmentsOverview> fetchAll() async =>
+      const InstallmentsOverview(totalOutstanding: '0.00', installments: []);
+
+  @override
+  Future<Installment> create({
+    required String merchant,
+    required String totalAmount,
+    required int installmentsCount,
+    required String startDate,
+  }) async {
+    throw UnimplementedError();
+  }
+}
 
 const _groceries = Category(
   id: 'cat-1',
@@ -115,6 +152,12 @@ void main() {
             ),
             categoryRepositoryProvider.overrideWithValue(
               _FakeCategoryRepository(),
+            ),
+            budgetRepositoryProvider.overrideWithValue(
+              _EmptyBudgetRepository(),
+            ),
+            installmentRepositoryProvider.overrideWithValue(
+              _EmptyInstallmentRepository(),
             ),
           ],
           child: MaterialApp(

@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import '../../../../core/localization/app_localizations.dart';
 import '../widgets/balance_widget.dart';
 import '../widgets/recent_transactions_widget.dart';
+import '../widgets/upcoming_installment_widget.dart';
+import '../widgets/budgets_preview_widget.dart';
 
-/// Dashboard layout (T8.1, docs/05_UX.md §4): the period-balance widget
-/// plus a preview of recent operations. Dashboard has no API endpoints
-/// of its own — it only composes calls the wallet/transactions features
-/// already expose (docs/MVP_Spec.md §10). Budgets/installments widgets
-/// land in T8.2; empty/skeleton/pull-to-refresh states in T8.3.
+/// Dashboard layout (T8.1-T8.2, docs/05_UX.md §4): the period-balance
+/// widget, the nearest installment payment (hidden if none), a preview
+/// of the hottest budgets, and recent operations. Dashboard has no API
+/// endpoints of its own — it only composes calls the wallet/budgets/
+/// installments/transactions features already expose
+/// (docs/MVP_Spec.md §10). Empty/skeleton/pull-to-refresh states land
+/// in T8.3.
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
 
@@ -23,6 +27,10 @@ class DashboardScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             BalanceWidget(),
+            SizedBox(height: 16),
+            UpcomingInstallmentWidget(),
+            SizedBox(height: 16),
+            BudgetsPreviewWidget(),
             SizedBox(height: 16),
             RecentTransactionsWidget(),
           ],
