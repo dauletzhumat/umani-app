@@ -147,6 +147,12 @@ class AppLocalizations {
       'createBudgetLimitLabel': 'Лимит',
       'createBudgetSaveButton': 'Сохранить',
       'budgetCreatedToast': 'Бюджет создан',
+      'installmentsScreenTitle': 'Рассрочки',
+      'installmentsEmptyMessage': 'Нет активных рассрочек',
+      'installmentsTotalOutstandingLabel': 'Общая задолженность',
+      'installmentCardInstallmentsCountTemplate': '{value} платежей',
+      'installmentCardNextPaymentTemplate': '{a} — {b}',
+      'installmentCardNoNextPayment': 'Нет предстоящих платежей',
     },
     'kk': {
       'appName': 'AI Finance',
@@ -268,6 +274,12 @@ class AppLocalizations {
       'createBudgetLimitLabel': 'Лимит',
       'createBudgetSaveButton': 'Сақтау',
       'budgetCreatedToast': 'Бюджет жасалды',
+      'installmentsScreenTitle': 'Бөліп төлеулер',
+      'installmentsEmptyMessage': 'Белсенді бөліп төлеулер жоқ',
+      'installmentsTotalOutstandingLabel': 'Жалпы қарыз',
+      'installmentCardInstallmentsCountTemplate': '{value} төлем',
+      'installmentCardNextPaymentTemplate': '{a} — {b}',
+      'installmentCardNoNextPayment': 'Алдағы төлемдер жоқ',
     },
     'en': {
       'appName': 'AI Finance',
@@ -391,6 +403,12 @@ class AppLocalizations {
       'createBudgetLimitLabel': 'Limit',
       'createBudgetSaveButton': 'Save',
       'budgetCreatedToast': 'Budget created',
+      'installmentsScreenTitle': 'Installments',
+      'installmentsEmptyMessage': 'No active installments',
+      'installmentsTotalOutstandingLabel': 'Total outstanding',
+      'installmentCardInstallmentsCountTemplate': '{value} payments',
+      'installmentCardNextPaymentTemplate': '{a} — {b}',
+      'installmentCardNoNextPayment': 'No upcoming payments',
     },
   };
 
@@ -548,6 +566,16 @@ class AppLocalizations {
   String get createBudgetLimitLabel => _string('createBudgetLimitLabel');
   String get createBudgetSaveButton => _string('createBudgetSaveButton');
   String get budgetCreatedToast => _string('budgetCreatedToast');
+  String get installmentsScreenTitle => _string('installmentsScreenTitle');
+  String get installmentsEmptyMessage => _string('installmentsEmptyMessage');
+  String get installmentsTotalOutstandingLabel =>
+      _string('installmentsTotalOutstandingLabel');
+  String installmentCardInstallmentsCount(int count) =>
+      _template('installmentCardInstallmentsCountTemplate', count.toString());
+  String installmentCardNextPayment(String amount, String dueDate) =>
+      _template2('installmentCardNextPaymentTemplate', a: amount, b: dueDate);
+  String get installmentCardNoNextPayment =>
+      _string('installmentCardNoNextPayment');
 
   /// Maps a backend error `code` (docs/08_API.md §5) to localized text,
   /// falling back to the raw message the server sent for anything not
