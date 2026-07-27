@@ -72,4 +72,11 @@ export class TypeOrmUserRepository implements UserRepository {
     }
     return updated;
   }
+
+  async softDelete(id: string, scheduledPurgeAt: Date): Promise<void> {
+    await this.repository.update(
+      { id },
+      { deletedAt: new Date(), scheduledPurgeAt },
+    );
+  }
 }
